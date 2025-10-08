@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروتکل واکنش سریع سخنگو</title>
+    <style>
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@33.003/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@33.003/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #003366; /* Deep blue for authority */
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+
+        .principles-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .principles-link:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #003366;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        h3 {
+             font-size: 1.5rem;
+             color: #343a40;
+             margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: #495057;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+
+        .grid-item {
+            background-color: #f1f3f5;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item:hover {
+            border-color: #007bff;
+            background-color: #e9ecef;
+        }
+        
+        .grid-item.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .grid-item.selected h3 {
+            color: white;
+        }
+
+        .grid-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: #007bff;
+        }
+        
+        .grid-item.selected i {
+            color: white;
+        }
+
+
+        .phase-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f1f3f5;
+            border-radius: 50px;
+            padding: 5px;
+            margin-top: 20px;
+        }
+
+        .phase-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 50px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phase-btn.active {
+            background-color: #28a745; /* Green for active phase */
+            color: white;
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.4);
+        }
+
+        .phase-btn span {
+            display: block;
+            font-size: 0.8em;
+            font-weight: normal;
+            color: #6c757d;
+        }
+        
+        .phase-btn.active span {
+            color: #e0e0e0;
+        }
+
+        #analysis-tool {
+            background-color: #e9f5ff; /* Light blue background */
+            border: 1px solid #b3d7ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        #analysis-tool h3 {
+            margin-top: 0;
+            color: #004085; /* Darker blue for title */
+        }
+
+        #analysis-tool textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            margin-top: 15px;
+            box-sizing: border-box; /* Important */
+            resize: vertical;
+        }
+        
+        #analysis-tool button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            background: #0056b3;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        #analysis-tool button:hover {
+             background: #004494;
+        }
+
+        #analysis-result-container {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            display: none; /* Hidden by default */
+        }
+        
+        #analysis-result-container h4 {
+            margin-top: 0;
+            color: #003366;
+        }
+
+        #analysis-result {
+            white-space: pre-wrap;
+            font-size: 1rem;
+            color: #343a40;
+            max-height: 400px;
+            overflow-y: auto;
+            border-top: 1px solid #e9ecef;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .close-button {
+            color: #aaa;
+            float: left; /* Changed to left for RTL */
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .modal-content h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        td:nth-child(3) { /* Target the "Goal" column */
+            background-color: #e6f7ff; /* A light blue to make it stand out */
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>پروتکل واکنش سریع سخنگو</h1>
+            <p>راهنمای عملیاتی و ابزار هوشمند برای مدیریت ارتباطات در بحران</p>
+            <a href="#" class="principles-link" id="show-principles-modal">مشاهده اصول کلیدی فرارسانه‌ای</a>
+        </header>
+
+        <main>
+            <section id="crisis-type-selector">
+                <h2>۱. نوع بحران را انتخاب کنید</h2>
+                <div class="grid-container" id="crisis-grid">
+                    <div class="grid-item" data-crisis="natural-disaster">
+                        <i class="fas fa-house-damage"></i>
+                        <h3>بلایای طبیعی</h3>
+                    </div>
+                    <div class="grid-item" data-crisis="infrastructure">
+                        <i class="fas fa-industry"></i>
+                        <h3>بحران زیرساختی</h3>
+                    </div>
+                    <div class="grid-item" data-crisis="economic">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>بحران اقتصادی</h3>
+                    </div>
+                    <div class="grid-item" data-crisis="public-health">
+                        <i class="fas fa-briefcase-medical"></i>
+                        <h3>بحران سلامت عمومی</h3>
+                    </div>
+                     <div class="grid-item" data-crisis="security">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>بحران امنیتی</h3>
+                    </div>
+                    <div class="grid-item" data-crisis="social-political">
+                        <i class="fas fa-users"></i>
+                        <h3>بحران سیاسی-اجتماعی</h3>
+                    </div>
+                     <div class="grid-item" data-crisis="cyber-attack">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>حملات سایبری</h3>
+                    </div>
+                    <div class="grid-item" data-crisis="governance">
+                        <i class="fas fa-landmark"></i>
+                        <h3>بحران حکمرانی</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section id="phase-selector">
+                <h2>۲. فاز زمانی عملیات را مشخص کنید</h2>
+                <div class="phase-container" id="phase-buttons">
+                    <button class="phase-btn active" data-phase="phase-1">
+                        فاز ۱ <span>۰-۱ ساعت</span>
+                    </button>
+                    <button class="phase-btn" data-phase="phase-2">
+                        فاز ۲ <span>۲-۶ ساعت</span>
+                    </button>
+                    <button class="phase-btn" data-phase="phase-3">
+                        فاز ۳ <span>۱۲-۴۸ ساعت</span>
+                    </button>
+                </div>
+            </section>
+            
+            <section id="response-guidelines">
+                <h2>۳. دستورالعمل اقدام سریع</h2>
+                <div id="guideline-content">
+                    <p>لطفاً ابتدا نوع بحران و فاز زمانی را انتخاب کنید تا دستورالعمل متناسب نمایش داده شود.</p>
+                </div>
+            </section>
+            
+            <!-- =================================================================== -->
+            <!--   بخش چهارم: این بخش به طور کامل با منطق جدید جایگزین شده است      -->
+            <!-- =================================================================== -->
+            <section id="analysis-tool">
+                <h3>۴. مولد بیانیه هوشمند ✨</h3>
+                <p>جزئیات اولیه حادثه را وارد کنید. هوش مصنوعی بر اساس اصول پروتکل، نوع بحران و فاز زمانی، یک بیانیه استاندارد و کامل برای شما تولید می‌کند.</p>
+                <textarea id="incidentDetails" placeholder="جزئیات اولیه حادثه را اینجا وارد کنید (مثال: آتش‌سوزی در انبار کالاهای اساسی تهران، ساعت ۲ بامداد، ۲ مصدوم اولیه گزارش شده)"></textarea>
+                <button onclick="generateStatement()">تولید بیانیه هوشمند</button>
+                
+                <div id="analysis-result-container">
+                    <h4>نتیجه تولید شده توسط هوش مصنوعی:</h4>
+                    <pre id="analysis-result"></pre>
+                </div>
+            </section>
+            <!-- =================================================================== -->
+            <!--                    پایان تغییرات بخش چهارم                          -->
+            <!-- =================================================================== -->
+
+        </main>
+    </div>
+
+    <!-- The Modal -->
+    <div id="principles-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>اصول کلیدی و فرارسانه‌ای</h2>
+            <p>در مدیریت بحران‌های مدرن، اقدامات رسانه‌ای سخنگویان موفق دولت‌ها بر این اصول استوار است که باید در تمامی ۸ دسته بحران رعایت شود:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصل کلیدی</th>
+                        <th>نحوه اجرای رسانه‌ای</th>
+                        <th>هدف</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>۱. Speed to Narrative (سرعت روایت)</td>
+                        <td>در فاز اول (۰ تا ۱ ساعت)، حتی اگر اطلاعات ناقص باشد، سخنگو باید سریعاً بیانیه بدهد. <strong>نباید</strong> بگذارید رسانه‌های غیررسمی، روایت بحران را بسازند. محتوای اولیه: تأیید، همدلی، کنترل.</td>
+                        <td>گرفتن انحصار روایت و جلوگیری از شایعه.</td>
+                    </tr>
+                    <tr>
+                        <td>۲. One Voice Policy (تک صدایی)</td>
+                        <td>در فاز دوم (۲ تا ۶ ساعت)، تنها سخنگو، یا وزیری که توسط او تعیین شده، حق اظهارنظر دارد. تمامی رسانه‌های رسمی موظف به ارجاع به این مرجع هستند. <strong>نباید</strong> اجازه داد مقامات میانی یا حاشیه‌ای اظهارنظر کنند.</td>
+                        <td>جلوگیری از تناقض و سردرگمی عمومی.</td>
+                    </tr>
+                    <tr>
+                        <td>۳. Accountability over Excuse (مسئولیت‌پذیری بر توجیه)</td>
+                        <td>در هر بحرانی (بخصوص زیرساختی, اقتصادی و حکمرانی)، در فاز دوم یا سوم، دولت باید بخشی از مسئولیت را بپذیرد. لحن باید حول <strong>"آنچه ما انجام خواهیم داد"</strong> باشد، نه <strong>"چرا این اتفاق افتاد"</strong> (توجیه).</td>
+                        <td>ترمیم اعتماد عمومی و نمایش صداقت.</td>
+                    </tr>
+                    <tr>
+                        <td>۴. Show, Don't Just Tell (نمایش عمل)</td>
+                        <td>به‌جای بیانیه‌های صرف، تصاویر و ویدئوهای عملیاتی از حضور در صحنه، تلاش تیم‌های امدادی، یا جلسات فوری دولت منتشر شود. مردم باید <strong>اقدام عملی</strong> را ببینند.</td>
+                        <td>نمایش کارآمدی و کنترل اوضاع.</td>
+                    </tr>
+                    <tr>
+                        <td>۵. Humanize the Response (انسانی‌سازی)</td>
+                        <td>در کنار آمار، سخنگو باید روی بُعد انسانی تمرکز کند؛ ادای احترام به قربانیان، ابراز همدلی با خانواده‌ها و قدردانی از تلاشگران. این امر به خصوص در بلایای طبیعی حیاتی است.</td>
+                        <td>ایجاد حس نزدیکی و کاهش فاصله دولت-ملت.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<script>
+    // State management
+    let selectedCrisis = null;
+    let selectedPhase = 'phase-1'; // Default phase
+
+    // Guidelines Data
+    const guidelines = {
+        'natural-disaster': {
+            'phase-1': '<strong>پیام کلیدی: تایید، همدلی، کنترل.</strong>\n- بیانیه فوری برای تایید وقوع حادثه (زلزله، سیل...). \n- ابراز همدلی عمیق با آسیب‌دیدگان. \n- اعلام بسیج فوری نیروهای امدادی و مدیریت بحران. \n- تاکید بر اینکه دولت کنترل اوضاع را در دست دارد. \n- <strong>اقدام:</strong> انتشار اولین تصاویر از ستاد مدیریت بحران.',
+            'phase-2': '<strong>پیام کلیدی: اطلاع‌رسانی، شفافیت، نمایش اقدام.</strong>\n- ارائه اولین آمار تایید شده (تلفات، مصدومان، خسارات) با احتیاط. \n- اعلام مناطق امن و مسیرهای تخلیه. \n- نمایش تصاویر و ویدئو از عملیات امداد و نجات در صحنه. \n- معرفی سخنگوی واحد بحران برای جلوگیری از تکثر منابع خبری.',
+            'phase-3': '<strong>پیام کلیدی: مسئولیت‌پذیری، چشم‌انداز، انسانی‌سازی.</strong>\n- حضور عالی‌ترین مقام اجرایی در منطقه. \n- قدردانی از زحمات امدادگران و مشارکت مردمی. \n- اعلام برنامه‌های دولت برای اسکان موقت و تامین نیازهای اولیه. \n- تمرکز بر داستان‌های انسانی و نجات‌یافتگان.'
+        },
+        'infrastructure': {
+            'phase-1': '<strong>پیام کلیدی: تایید، کاهش نگرانی، اطلاع‌رسانی اولیه.</strong>\n- تایید سریع حادثه (قطعی برق، فروریختن پل...). \n- اطلاع‌رسانی در مورد گستردگی مشکل و مناطق متاثر. \n- ارائه راهکارهای موقت برای شهروندان (مثلا مسیرهای جایگزین). \n- تاکید بر تلاش تیم‌های فنی برای رفع مشکل.',
+            'phase-2': '<strong>پیام کلیدی: مسئولیت‌پذیری، ارائه زمان‌بندی.</strong>\n- پذیرش مسئولیت اختلال پیش‌آمده. \n- توضیح علت حادثه به زبان ساده و غیرفنی (در صورت مشخص شدن). \n- ارائه یک بازه زمانی "واقع‌بینانه" برای حل مشکل. \n- <strong>اقدام:</strong> نمایش تصاویر از تلاش تیم‌های عملیاتی.',
+            'phase-3': '<strong>پیام کلیدی: گزارش پیشرفت، پاسخگویی، پیشگیری.</strong>\n- گزارش دقیق از درصد پیشرفت کار. \n- پاسخگویی به سوالات و نگرانی‌های اصلی مردم. \n- اعلام برنامه‌هایی برای جلوگیری از تکرار حوادث مشابه و مقاوم‌سازی زیرساخت‌ها.'
+        },
+        // ... Add other crisis types here with the same structure
+        'economic': {
+             'phase-1': '<strong>پیام کلیدی: پذیرش واقعیت، آرام‌سازی بازار.</strong>\n- تایید شاخص یا خبر منفی (تورم، نرخ ارز...). \n- پرهیز از انکار یا کوچک‌نمایی. \n- اعلام برگزاری جلسه فوری تیم اقتصادی دولت. \n- پیام اصلی: "ما شرایط را رصد می‌کنیم و برای مدیریت آن برنامه داریم."',
+             'phase-2': '<strong>پیام کلیدی: اعلام سیاست مداخله‌ای، مسئولیت‌پذیری.</strong>\n- اعلام سیاست‌های مشخص برای کنترل اوضاع (مثلا سیاست‌های ارزی، کنترل قیمت). \n- رئیس بانک مرکزی یا وزیر اقتصاد باید مسئولیت را بپذیرد. \n- تشریح دلایل "واقعی" بحران و پرهیز از فرافکنی صرف.',
+             'phase-3': '<strong>پیام کلیدی: نمایش نتایج اولیه، بازگرداندن ثبات روانی.</strong>\n- گزارش از نتایج اولیه سیاست‌های اعمال‌شده (حتی اگر اندک باشد). \n- معرفی بسته‌های حمایتی برای اقشار آسیب‌پذیر. \n- تلاش برای ایجاد چشم‌انداز مثبت و قابل باور برای آینده.'
+        },
+        'default': {
+            'phase-1': 'دستورالعمل عمومی فاز ۱: تایید سریع، ابراز همدلی و اعلام کنترل اولیه بر اوضاع.',
+            'phase-2': 'دستورالعمل عمومی فاز ۲: اطلاع‌رسانی شفاف، نمایش اقدامات و معرفی سخنگوی واحد.',
+            'phase-3': 'دستورالعمل عمومی فاز ۳: پذیرش مسئولیت، تمرکز بر جنبه‌های انسانی و ارائه چشم‌انداز آینده.'
+        }
+    };
+    
+    // Function to update the guideline display
+    function updateGuideline() {
+        const guidelineContent = document.getElementById('guideline-content');
+        if (selectedCrisis && selectedPhase) {
+            const crisisData = guidelines[selectedCrisis] || guidelines['default'];
+            const text = crisisData[selectedPhase] || 'دستورالعمل برای این ترکیب یافت نشد.';
+            guidelineContent.innerHTML = text.replace(/\n/g, '<br>'); // Convert newlines to <br> for HTML display
+        } else {
+            guidelineContent.innerHTML = '<p>لطفاً ابتدا نوع بحران و فاز زمانی را انتخاب کنید تا دستورالعمل متناسب نمایش داده شود.</p>';
+        }
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        const crisisGrid = document.getElementById('crisis-grid');
+        const phaseButtons = document.getElementById('phase-buttons');
+
+        crisisGrid.addEventListener('click', function(e) {
+            const targetItem = e.target.closest('.grid-item');
+            if (!targetItem) return;
+
+            // Remove 'selected' from all items
+            document.querySelectorAll('.grid-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Add 'selected' to the clicked item
+            targetItem.classList.add('selected');
+            selectedCrisis = targetItem.dataset.crisis;
+            updateGuideline();
+        });
+
+        phaseButtons.addEventListener('click', function(e) {
+            const targetBtn = e.target.closest('.phase-btn');
+            if (!targetBtn) return;
+
+            document.querySelectorAll('.phase-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            targetBtn.classList.add('active');
+            selectedPhase = targetBtn.dataset.phase;
+            updateGuideline();
+        });
+
+        updateGuideline(); // Initial call
+    });
+
+    // Modal Logic
+    const modal = document.getElementById("principles-modal");
+    const btn = document.getElementById("show-principles-modal");
+    const span = document.getElementsByClassName("close-button")[0];
+
+    btn.onclick = function(e) {
+        e.preventDefault();
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    // ===================================================================
+    //       منطق جدید برای مولد بیانیه هوشمند (بخش چهارم)
+    // ===================================================================
+    
+    /**
+     * یک تماس جعلی با API برای شبیه‌سازی تولید محتوا توسط هوش مصنوعی
+     * @param {string} prompt - پرامپتی که به مدل ارسال می‌شود.
+     * @returns {Promise<string>} - یک Promise که با یک بیانیه تولید شده پاسخ می‌دهد.
+     */
+    function fakeApiCall(prompt) {
+        console.log("--- پرامپت ارسالی به API ---");
+        console.log(prompt);
+        console.log("--------------------------");
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                // پاسخ شبیه‌سازی شده بر اساس ورودی‌ها
+                let response = `**بیانیه رسمی سخنگوی دولت**\n\n`;
+                response += `ملت شریف ایران،\n\n`;
+                response += `با تاسف و تاثر عمیق، وقوع حادثه [نام حادثه بر اساس جزئیات] را در [مکان بر اساس جزئیات] تایید می‌کنیم. در این لحظات اولیه، تمام تمرکز دولت و نیروهای امدادی بر کنترل اوضاع و حفظ جان شهروندان عزیز است.\n\n`;
+                response += `بر اساس دستور رئیس‌جمهور محترم، ستاد مدیریت بحران تشکیل شده و تیم‌های عملیاتی از همان دقایق ابتدایی در محل حادثه حضور یافته‌اند. ما متعهد به اطلاع‌رسانی شفاف و پیوسته هستیم و اخبار تکمیلی پس از تایید از همین طریق به استحضار شما خواهد رسید.\n\n`;
+                response += `از مردم عزیز تقاضا داریم ضمن حفظ آرامش، از تردد در مناطق نزدیک به حادثه خودداری کرده و اخبار را تنها از مراجع رسمی دنبال کنند.\n\n`;
+                response += `با تمام توان در کنار شما هستیم.\n`;
+                resolve(response);
+            }, 2000); // شبیه‌سازی تاخیر 2 ثانیه‌ای شبکه
+        });
+    }
+
+    /**
+     * تابع اصلی برای تولید بیانیه هوشمند
+     */
+    async function generateStatement() {
+        const incidentDetails = document.getElementById('incidentDetails').value;
+        const resultContainer = document.getElementById('analysis-result-container');
+        const resultElement = document.getElementById('analysis-result');
+
+        if (!selectedCrisis) {
+            alert('لطفا ابتدا نوع بحران را انتخاب کنید.');
+            return;
+        }
+        if (!incidentDetails.trim()) {
+            alert('لطفا جزئیات اولیه حادثه را وارد کنید.');
+            return;
+        }
+
+        // نمایش وضعیت "در حال پردازش"
+        resultContainer.style.display = 'block';
+        resultElement.textContent = 'در حال تولید بیانیه هوشمند با استفاده از هوش مصنوعی... لطفاً منتظر بمانید.';
+
+        // ۱. ساخت پرامپت جامع
+        const prompt = `
+شما یک سخنگوی ارشد و استراتژیست ارتباطات بحران برای دولت هستید. وظیفه شما تولید یک بیانیه رسمی، دقیق و موثر بر اساس اطلاعات اولیه یک حادثه است.
+
+**قوانین بنیادین (باید به طور کامل رعایت شوند):**
+1.  **سرعت روایت:** بیانیه باید حس فوریت و کنترل را منتقل کند.
+2.  **انسانی‌سازی:** با مردم همدلی کن و روی جنبه انسانی فاجعه تمرکز کن.
+3.  **نمایش عمل:** به جای وعده، از اقدامات "آغاز شده" صحبت کن (تشکیل ستاد، اعزام نیرو).
+4.  **مسئولیت‌پذیری:** حتی در فاز اولیه، دولت را پاسخگو و حاضر در صحنه نشان بده.
+5.  **تک‌صدایی:** مردم را به یک منبع خبری واحد (مراجع رسمی) ارجاع بده.
+
+**زمینه بحران:**
+- **نوع بحران:** ${document.querySelector('.grid-item.selected h3').textContent.trim()}
+- **فاز زمانی:** ${document.querySelector('.phase-btn.active').textContent.trim().split(' ')[0]} (${document.querySelector('.phase-btn.active span').textContent})
+
+**اطلاعات اولیه حادثه (داده خام):**
+"${incidentDetails}"
+
+**وظیفه:**
+با استفاده از اطلاعات و قوانین بالا، یک پیش‌نویس "بیانیه رسمی" کامل و آماده برای قرائت بنویس. لحن باید رسمی، قاطع، شفاف و همدلانه باشد. بیانیه را به گونه‌ای بازنویسی کن که تمام اصول ۵ گانه در آن مشهود باشد.
+`;
+
+        try {
+            // ۲. فراخوانی API (در اینجا شبیه‌سازی شده)
+            const generatedStatement = await fakeApiCall(prompt);
+
+            // ۳. نمایش نتیجه
+            resultElement.textContent = generatedStatement;
+
+        } catch (error) {
+            resultElement.textContent = 'خطا در ارتباط با سرویس هوش مصنوعی. لطفا دوباره تلاش کنید.';
+            console.error('API Call Failed:', error);
+        }
+    }
+
+
+</script>
+
+</body>
+</html>
