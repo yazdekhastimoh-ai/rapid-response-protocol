@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروتکل جامع مدیریت ارتباطات بحران</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #c0392b;
+            --light-bg: #ecf0f1;
+            --text-color: #333;
+            --border-color: #bdc3c7;
+            --header-font-size: 2.2rem;
+            --section-title-size: 1.8rem;
+            --card-title-size: 1.3rem;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .navbar a:hover, .navbar a.active {
+            background-color: var(--accent-color);
+        }
+        
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.85)), url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        .hero-nav {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .hero-nav .btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 2px solid var(--accent-color);
+        }
+        .hero-nav .btn:hover {
+            background-color: #a5281b;
+            transform: translateY(-3px);
+        }
+
+        /* --- Section Styles --- */
+        .content-section {
+            background-color: #fff;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            scroll-margin-top: 80px; /* Offset for sticky nav */
+        }
+        .content-section h2 {
+            font-size: var(--section-title-size);
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        /* --- Principles Table --- */
+        .principles-table-wrapper {
+            overflow-x: auto;
+        }
+        .principles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 800px;
+        }
+        .principles-table th, .principles-table td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: right;
+            vertical-align: middle;
+        }
+        .principles-table th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+        }
+        .principles-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .principles-table td:first-child {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        /* --- Enhanced Analysis Tool --- */
+        .analysis-tool {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .analysis-tool-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .analysis-tool-controls .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .analysis-tool-controls label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        .analysis-tool-controls select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            background-color: white;
+        }
+        .analysis-tool textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+        .analysis-tool button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .analysis-tool button:hover {
+            background-color: #a5281b;
+        }
+        #analysisResultWrapper {
+            margin-top: 20px;
+            display: none;
+        }
+        #analysisResult, #suggestedStatement {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            white-space: pre-wrap;
+            line-height: 1.9;
+        }
+        #suggestedStatement {
+            margin-top: 20px;
+            border-left: 5px solid var(--success-color);
+            background-color: #f0fff4;
+        }
+        #analysisResultWrapper h4, #analysisResultWrapper h5 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+        #analysisResultWrapper h5 {
+            font-size: 1.1rem;
+            color: var(--success-color);
+        }
+        #analysisResult .spinner {
+            display: block;
+            margin: 20px auto;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* --- Crisis Grid --- */
+        .crisis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .crisis-btn {
+            background-color: #fff;
+            color: var(--primary-color);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .crisis-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .crisis-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* --- Output Section --- */
+        #outputSection {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: none; /* Hidden by default */
+        }
+        
+        /* --- Phase Cards --- */
+        .phases-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .phase-card {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        .phase-card:hover {
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .phase-header h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        .phase-header .timeframe {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .phase-card ul {
+            padding-right: 20px;
+            margin: 0;
+        }
+        .phase-card li {
+            margin-bottom: 10px;
+        }
+        
+        /* --- Specific Principles --- */
+        .specific-principles {
+            margin-top: 30px;
+            background-color: rgba(44, 62, 80, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .specific-principles h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .specific-principles ul {
+            columns: 2;
+            -webkit-columns: 2;
+            -moz-columns: 2;
+            gap: 20px;
+            padding-right: 20px;
+        }
+        .specific-principles li {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        /* --- Roadmap Accordion --- */
+        .accordion {
+            margin-top: 20px;
+        }
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            background-color: #fff;
+            color: var(--primary-color);
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #f8f9fa;
+        }
+        .accordion-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header::after {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            background-color: #fdfdfd;
+        }
+        .accordion-content .phase-card {
+            background-color: white;
+            border-color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+        .accordion-content .phase-card h4 {
+            color: var(--accent-color);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .navbar { flex-wrap: wrap; justify-content: center; padding: 10px; }
+            .navbar a { padding: 8px 15px; font-size: 0.9rem; margin: 5px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-nav { gap: 10px; }
+            .hero-nav .btn { padding: 10px 20px; font-size: 0.9rem;}
+            .content-section { padding: 20px; }
+            .content-section h2 { font-size: 1.6rem; }
+            .crisis-grid { grid-template-columns: 1fr; }
+            .specific-principles ul { columns: 1; -webkit-columns: 1; -moz-columns: 1; }
+            .phases-container { flex-direction: column; }
+            .accordion-header { font-size: 1.1rem; }
+            .analysis-tool-controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#hero" class="nav-link">صفحه اصلی</a>
+        <a href="#foundations" class="nav-link">مبانی و اصول</a>
+        <a href="#protocols" class="nav-link">پروتکل بیانیه‌ها</a>
+        <a href="#roadmap" class="nav-link">نقشه راه سخنگو</a>
+        <a href="#analysis" class="nav-link">ابزار تحلیل</a>
+    </nav>
+
+    <div class="container">
+        
+        <header class="hero" id="hero">
+            <h1>پروتکل جامع مدیریت ارتباطات بحران</h1>
+            <p>راهنمای یکپارچه سخنگو: از اصول کلان تا اقدام عملیاتی</p>
+            <div class="hero-nav">
+                <a href="#foundations" class="btn">۱. مطالعه اصول</a>
+                <a href="#protocols" class="btn">۲. تدوین بیانیه</a>
+                <a href="#roadmap" class="btn">۳. طراحی اقدام</a>
+                <a href="#analysis" class="btn">۴. نقد پیش‌نویس</a>
+            </div>
+        </header>
+
+        <!-- =========== SECTION 1: FOUNDATIONS =========== -->
+        <section id="foundations" class="content-section">
+            <h2>بخش اول: مبانی و اصول کلیدی فرارسانه‌ای</h2>
+            <p>در مدیریت بحران‌های مدرن، اقدامات رسانه‌ای سخنگویان موفق دولت‌ها بر این اصول استوار است که باید در تمامی دسته‌های بحران رعایت شود. این اصول، شالوده تمام اقدامات بعدی است.</p>
+            <div class="principles-table-wrapper">
+                <table class="principles-table">
+                    <thead>
+                        <tr>
+                            <th>اصل کلیدی</th>
+                            <th>نحوه اجرای رسانه‌ای</th>
+                            <th>هدف استراتژیک</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>۱. سرعت روایت (Speed to Narrative)</td><td>در فاز اول (۰ تا ۱ ساعت)، حتی اگر اطلاعات ناقص باشد، سخنگو باید سریعاً بیانیه بدهد. <strong>نباید</strong> بگذارید رسانه‌های غیررسمی، روایت بحران را بسازند. محتوای اولیه: تأیید، همدلی، کنترل.</td><td>گرفتن انحصار روایت و جلوگیری از شایعه.</td></tr>
+                        <tr><td>۲. تک‌صدایی (One Voice Policy)</td><td>در فاز دوم (۲ تا ۶ ساعت)، تنها سخنگو، یا مقامی که توسط او تعیین شده، حق اظهارنظر دارد. تمامی رسانه‌های رسمی موظف به ارجاع به این مرجع هستند. <strong>نباید</strong> اجازه داد مقامات میانی اظهارنظر کنند.</td><td>جلوگیری از تناقض و سردرگمی عمومی.</td></tr>
+                        <tr><td>۳. مسئولیت‌پذیری بر توجیه (Accountability over Excuse)</td><td>در هر بحرانی (بخصوص زیرساختی و حکمرانی)، دولت باید بخشی از مسئولیت را بپذیرد. لحن باید حول <strong>"آنچه ما انجام خواهیم داد"</strong> باشد، نه <strong>"چرا این اتفاق افتاد"</strong>.</td><td>ترمیم اعتماد عمومی و نمایش صداقت.</td></tr>
+                        <tr><td>۴. نمایش عمل (Show, Don't Just Tell)</td><td>به‌جای بیانیه‌های صرف، تصاویر و ویدئوهای عملیاتی از حضور در صحنه، تلاش تیم‌های امدادی، یا جلسات فوری دولت منتشر شود. مردم باید <strong>اقدام عملی</strong> را ببینند.</td><td>نمایش کارآمدی و کنترل اوضاع.</td></tr>
+                        <tr><td>۵. انسانی‌سازی (Humanize the Response)</td><td>در کنار آمار، سخنگو باید روی بُعد انسانی تمرکز کند؛ ادای احترام به قربانیان، ابراز همدلی با خانواده‌ها و قدردانی از تلاشگران. این امر در بلایای طبیعی حیاتی است.</td><td>ایجاد حس نزدیکی و کاهش فاصله دولت-ملت.</td></tr>
+                        <tr><td>۶. قاب‌بندی هوشمند (Smart Framing)</td><td>بحران را در چارچوب مطلوب دولت تعریف کنید. (مثلاً: حمله تروریستی "کور" و "ناشی از استیصال دشمن" یا نوسان ارز "هیجانی" و "موقتی").</td><td>هدایت افکار عمومی و کنترل تفسیر رویداد.</td></tr>
+                        <tr><td>۷. شفافیت مدیریت‌شده (Managed Transparency)</td><td>اطلاعاتی را که به نفع روایت دولت است (مانند حجم کمک‌رسانی) به طور شفاف و مداوم منتشر کنید و در مورد اطلاعات نامشخص (مانند آمار دقیق اولیه) سکوت تاکتیکی کنید.</td><td>ایجاد حس صداقت ضمن حفظ کنترل بر اطلاعات.</td></tr>
+                        <tr><td>۸. معرفی دشمن مشترک (Common Enemy)</td><td>در بحران‌های امنیتی و اقتصادی، یک "دشمن" مشخص (تروریست‌ها، سفته‌بازان، دشمن خارجی) معرفی کنید تا خشم عمومی به سمت آن هدایت شود.</td><td>بسیج ملی و انحراف انتقادات از دولت.</td></tr>
+                        <tr><td>۹. چشم‌انداز آینده (Future Outlook)</td><td>در فاز سوم، روایت را از "شرح بحران" به "برنامه آینده" تغییر دهید (برنامه بازسازی، اصلاح ساختار، برخورد با مسببان).</td><td>القا امید و نمایش توانایی دولت برای عبور از بحران.</td></tr>
+                        <tr><td>۱۰. پیش‌دستی در همراهی (Proactive Empathy)</td><td>در بحران‌های حکمرانی (مثل فساد)، قبل از فشار رسانه‌ها، دولت خود باید پیش‌قدم در محکومیت، عذرخواهی و اعلام برخورد قاطع شود.</td><td>تبدیل تهدید به فرصت و قرار گرفتن در کنار مردم.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- =========== SECTION 2: STATEMENT PROTOCOLS =========== -->
+        <section id="protocols" class="content-section">
+            <h2>بخش دوم: پروتکل تدوین بیانیه‌های سه‌فاز</h2>
+            <p>نوع بحران را انتخاب کنید تا قالب‌های پیشنهادی بیانیه و اصول اختصاصی آن نمایش داده شود.</p>
+            <div id="crisis-selector" class="crisis-grid">
+            </div>
+
+            <div id="outputSection">
+                <h3 id="crisisTitle" style="font-size: 1.6rem; color: var(--accent-color);"></h3>
+                <div class="specific-principles">
+                    <h3>اصول اختصاصی این بحران</h3>
+                    <ul id="specificPrinciplesList"></ul>
+                </div>
+                <div class="phases-container">
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== SECTION 3: SPOKESPERSON'S ROADMAP =========== -->
+        <section id="roadmap" class="content-section">
+            <h2>بخش سوم: نقشه راه عملیاتی سخنگو</h2>
+            <p>این بخش، اقدامات واقع‌بینانه و مشخص سخنگوی دولت را در سه فاز زمانی برای هر بحران تشریح می‌کند. بر روی هر بحران کلیک کنید تا نقشه راه آن را مشاهده نمایید.</p>
+            <div id="roadmap-accordion" class="accordion">
+            </div>
+        </section>
+
+        <!-- =========== SECTION 4: ENHANCED ANALYSIS TOOL =========== -->
+        <section id="analysis" class="content-section">
+            <h2>بخش چهارم: ابزار نقد و تحلیل هوشمند بیانیه</h2>
+            <p>برای دریافت تحلیل دقیق، ابتدا نوع بحران و فاز زمانی بیانیه را مشخص کنید، سپس پیش‌نویس خود را وارد نمایید. هوش مصنوعی بیانیه شما را بر اساس تمام پروتکل‌های مرتبط نقد کرده و یک نسخه اصلاح‌شده پیشنهاد می‌دهد.</p>
+            <div class="analysis-tool">
+                <div class="analysis-tool-controls">
+                    <div class="form-group">
+                        <label for="analysisCrisisType">۱. نوع بحران را انتخاب کنید:</label>
+                        <select id="analysisCrisisType">
+                            <!-- Options will be generated by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="analysisPhase">۲. فاز بیانیه را انتخاب کنید:</label>
+                        <select id="analysisPhase">
+                            <option value="1">فاز اول (بیانیه اولیه)</option>
+                            <option value="2">فاز دوم (بیانیه عملیاتی/تکمیلی)</option>
+                            <option value="3">فاز سوم (بیانیه آینده‌نگر/انسجام‌بخش)</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="statementInput" style="font-weight: 700; color: var(--primary-color);">۳. متن پیش‌نویس بیانیه را وارد کنید:</label>
+                <textarea id="statementInput" placeholder="متن بیانیه خود را اینجا وارد کنید..."></textarea>
+                <button id="analyzeButton">تحلیل و اصلاح پیش‌نویس</button>
+                <div id="analysisResultWrapper">
+                    <h4>نتیجه تحلیل هوش مصنوعی:</h4>
+                    <div id="analysisResult"></div>
+                    <div id="suggestedStatementWrapper" style="display: none;">
+                        <h5>بیانیه پیشنهادی جایگزین:</h5>
+                        <div id="suggestedStatement"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const crisisData = {
+            'natural-disaster': {
+                title: '۱. بلایای طبیعی (سیل، زلزله)',
+                principles: ['اولویت مطلق: نمایش همدلی عمیق.', 'تمرکز بر آمار امدادرسانی، نه آمار تلفات.', 'انسانی‌سازی: روایت داستان قهرمانان گمنام.', 'نمایش حضور میدانی مقامات ارشد.', 'شفافیت در اعلام مسیر کمک‌های مردمی.', 'وعده بازسازی و نگاه به آینده.', 'بسیج ملی و تقویت همبستگی.', 'قدردانی مستمر از نیروهای امدادی و داوطلبان.', 'تکذیب فوری شایعات مربوط به کم‌کاری.', 'ایجاد مرجعیت واحد برای اعلام نیازها.'],
+                phases: [
+                    { title: 'فاز اول: بیانیه تأیید و همدلی', time: '۰-۱ ساعت', points: ['تأیید وقوع حادثه به صورت قطعی.', 'ابراز تأسف و همدلی عمیق با آسیب‌دیدگان.', 'اعلام بسیج فوری امکانات کشور به دستور رئیس جمهور.', 'اعلام اینکه دولت بر اوضاع کنترل و نظارت دارد.'], keywords: ['تاسف', 'همدلی', 'بسیج', 'کنترل'] },
+                    { title: 'فاز دوم: بیانیه عملیاتی', time: '۲-۶ ساعت', points: ['ارائه اولین آمار تأیید شده (تعداد مصدومان، تیم‌های اعزامی).', 'معرفی سخنگوی میدانی (مانند رئیس هلال احمر).', 'اعلام مسیرهای امن و ناامن.', 'درخواست از مردم برای عدم تجمع در محل حادثه.'], keywords: ['آمار', 'تیم', 'مسیر', 'هلال احمر'] },
+                    { title: 'فاز سوم: بیانیه امید و انسجام', time: '۱۲-۴۸ ساعت', points: ['تشریح اقدامات انجام شده با آمار (تعداد چادر، پتو و...).', 'قدردانی ویژه از نیروهای مردمی و جهادی.', 'اعلام شماره حساب‌های رسمی جهت جلب مشارکت عمومی.', 'ارائه چشم‌انداز اولیه برای اسکان موقت و بازسازی.'], keywords: ['اقدامات', 'قدردانی', 'حساب', 'بازسازی'] }
+                ],
+                roadmap: [
+                     { title: 'فاز ۱ (۰-۲ ساعت): کنترل روایت اولیه', action: '<strong>اقدام سخنگو:</strong> انتشار یک بیانیه بسیار کوتاه متنی (در توییتر/X و کانال تلگرام دولت) و یک پیام ویدئویی یک دقیقه‌ای ضبط شده با موبایل (بدون تشریفات).', content: '<strong>محتوای کلیدی:</strong> "عمق فاجعه انسانی در [نام منطقه] قلب همه ما را به درد آورده است. به دستور رئیس‌جمهور، تمام امکانات کشور برای نجات جان هم‌وطنان بسیج شده است. من به طور مداوم گزارش اقدامات را به اطلاع شما خواهم رساند."', goal: '<strong>هدف:</strong> تأیید سریع، ابراز همدلی عمیق، و معرفی خود به عنوان مرجع اصلی خبر.' },
+                     { title: 'فاز ۲ (۲-۱۲ ساعت): چارچوب‌بندی و مدیریت اطلاعات', action: '<strong>اقدام سخنگو:</strong> برگزاری یک نشست خبری کوتاه (حداکثر ۱۵ دقیقه) در محل ستاد بحران.', content: '<strong>محتوای کلیدی:</strong> ارائه <strong>اولین آمار رسمی</strong> (حتی اگر تقریبی باشد)، اعلام <strong>مسیرهای امن</strong> برای تردد، اعلام <strong>مسئول اصلی عملیات میدانی</strong> (مثلاً رئیس هلال احمر) و درخواست از رسانه‌ها برای هماهنگی با او.', goal: '<strong>هدف:</strong> ارائه اطلاعات عملیاتی، جلوگیری از سردرگمی و نمایش هماهنگی دولت (سیاست تک‌صدایی).' },
+                     { title: 'فاز ۳ (۱۲-۴۸ ساعت): تعمیق روایت و پاسخگویی', action: '<strong>اقدام سخنگو:</strong> انجام مصاحبه زنده با شبکه خبر سراسری.', content: '<strong>محتوای کلیدی:</strong> تمرکز بر <strong>"داستان‌های انسانی"</strong> نجات‌یافتگان و امدادگران. قدردانی رسمی و نام بردن از چند گروه جهادی یا مردمی. اعلام شماره حساب‌های رسمی برای جمع‌آوری کمک‌ها و تشریح <strong>برنامه اولیه اسکان موقت</strong>.', goal: '<strong>هدف:</strong> انسانی‌سازی بحران، تقویت همبستگی ملی و جلب اعتماد عمومی برای مشارکت.' }
+                ]
+            },
+            'public-health': {
+                title: '۲. بهداشت عمومی (اپیدمی، آلودگی)',
+                principles: ['مرجعیت‌بخشی به متخصصان (وزارت بهداشت).', 'مقابله فعال با شبه‌علم و شایعات.', 'تأکید بر مسئولیت اجتماعی و فردی.', 'شفافیت در آمار ضمن پرهیز از ایجاد وحشت.', 'انسانی‌سازی تلاش کادر درمان.', 'توجیه منطقی محدودیت‌ها برای جامعه.', 'اطلاع‌رسانی در مورد بسته‌های حمایتی دولت.', 'نمایش قاطعیت در برخورد با محتکران اقلام بهداشتی.', 'آموزش مستمر و ساده‌سازی مفاهیم علمی.', 'پرهیز از سیاسی کردن بحران سلامت.'],
+                phases: [
+                     { title: 'فاز اول: بیانیه تأیید و کنترل', time: '۰-۲ ساعت', points: ['تأیید وجود یک تهدید بهداشتی جدید.', 'درخواست از مردم برای حفظ آرامش.', 'اعلام مرجعیت مطلق وزارت بهداشت برای اطلاع‌رسانی.', 'توصیه به رعایت پروتکل‌های اولیه (در صورت وجود).'], keywords:['تایید', 'آرامش', 'وزارت بهداشت', 'پروتکل'] },
+                     { title: 'فاز دوم: بیانیه آموزشی و مدیریتی', time: '۳-۱۲ ساعت', points: ['ارائه آمار اولیه ابتلا یا شیوع.', 'توضیح ساده راه‌های پیشگیری و علائم بیماری.', 'اعلام تصمیمات اولیه ستاد ملی مقابله با بحران.', 'اطلاع‌رسانی در مورد مراکز درمانی مشخص‌شده.'], keywords:['آمار', 'پیشگیری', 'ستاد', 'مراکز'] },
+                     { title: 'فاز سوم: بیانیه محدودیت و حمایت', time: '۲۴-۷۲ ساعت', points: ['اعلام محدودیت‌های احتمالی (قرنطینه، تعطیلی).', 'توجیه کامل دلایل علمی و اجتماعی این محدودیت‌ها.', 'معرفی بسته‌های حمایتی دولت از کسب‌وکارها و اقشار آسیب‌پذیر.', 'قدردانی از کادر درمان و همراهی عمومی مردم.'], keywords:['محدودیت', 'توجیه', 'حمایتی', 'کادر درمان'] }
+                ],
+                 roadmap: [
+                    { title: 'فاز ۱ (۰-۲ ساعت): بیانیه مشترک', action: '<strong>اقدام سخنگو:</strong> قرائت یک بیانیه مشترک کوتاه در کنار وزیر بهداشت.', content: '<strong>محتوای کلیدی:</strong> "یک تهدید جدید برای سلامت عمومی شناسایی شده است. وزارت بهداشت با تمام توان در حال بررسی ابعاد آن است. آرامش خود را حفظ کنید و صرفاً به اطلاعیه‌های رسمی وزارت بهداشت توجه نمایید."', goal: '<strong>هدف:</strong> جلوگیری از وحشت عمومی، تأیید اصل ماجرا و اعطای مرجعیت علمی به وزارت بهداشت.' },
+                    { title: 'فاز ۲ (۲-۱۲ ساعت): نشست خبری آموزشی', action: '<strong>اقدام سخنگو:</strong> برگزاری نشست خبری که در آن سخنگو نقش "تسهیل‌گر" را دارد. او سوالات خبرنگاران را دریافت کرده و از یک <strong>متخصص برجسته پزشکی</strong> (که کنار او نشسته) می‌خواهد به زبان ساده پاسخ دهد.', content: '<strong>محتوای کلیدی:</strong> "آیا ماسک موثر است؟"، "علائم اولیه چیست؟"، "راه‌های انتقال کدامند؟".', goal: '<strong>هدف:</strong> استفاده از اعتبار یک چهره علمی برای اقناع مردم و انتقال مرجعیت از دولت به جامعه پزشکی.' },
+                    { title: 'فاز ۳ (۱۲-۴۸ ساعت): گفتگوی ویژه خبری', action: '<strong>اقدام سخنگو:</strong> حضور در یک برنامه تحلیلی تلویزیونی.', content: '<strong>محتوای کلیدی:</strong> اعلام <strong>محدودیت‌های جدید</strong> (در صورت لزوم) و مهم‌تر از آن، <strong>توجیه منطقی</strong> پشت هر محدودیت. اعلام بسته‌های حمایتی دولت برای اصناف آسیب‌دیده از محدودیت‌ها.', goal: '<strong>هدف:</strong> نمایش منطق پشت تصمیمات سخت و کاهش مقاومت اجتماعی در برابر آن‌ها.' }
+                ]
+            },
+            'technical-infra': {
+                title: '۳. فنی و زیرساختی (قطعی برق، گاز)',
+                principles: ['عذرخواهی فوری، صریح و بی‌قید و شرط.', 'پذیرش کامل مسئولیت، پرهیز از توجیه.', 'اطلاع‌رسانی مداوم در مورد زمان‌بندی رفع مشکل.', 'استفاده از رسانه‌های جایگزین (مانند رادیو).', 'نمایش تلاش بی‌وقفه تیم‌های فنی.', 'توضیح علت به زبان ساده و غیرفنی.', 'اعلام برنامه برای جلوگیری از تکرار حادثه.', 'وعده جبران خسارت به آسیب‌دیدگان.', 'پرهیز از مقصریابی در فازهای اولیه.', 'شفافیت در اعلام مناطق تحت تأثیر.'],
+                phases: [
+                     { title: 'فاز اول: بیانیه پذیرش و عذرخواهی', time: '۰-۱ ساعت', points: ['پذیرش وقوع اختلال گسترده.', 'عذرخواهی صریح از شهروندان به دلیل مشکلات پیش‌آمده.', 'اعلام اینکه تیم‌های فنی در حال رفع مشکل هستند.', 'قول برای اطلاع‌رسانی سریع و شفاف.'], keywords: ['عذرخواهی', 'متاسفیم', 'اختلال', 'تیم فنی'] },
+                     { title: 'فاز دوم: بیانیه اطلاع‌رسانی و مدیریت انتظار', time: '۲-۴ ساعت', points: ['توضیح اولیه و ساده علت حادثه.', 'ارائه جدول زمان‌بندی تقریبی برای رفع مشکل در مناطق مختلف.', 'اعلام شماره تماس‌های اضطراری.', 'درخواست صرفه‌جویی از مشترکین سایر مناطق.'], keywords: ['علت', 'زمان‌بندی', 'تماس', 'صرفه‌جویی'] },
+                     { title: 'فاز سوم: بیانیه پاسخگویی و آینده', time: '۱۲-۲۴ ساعت', points: ['ارائه گزارش کامل از ابعاد حادثه و اقدامات انجام‌شده.', 'معرفی برنامه دولت برای نوسازی زیرساخت‌ها و جلوگیری از تکرار.', 'اعلام سازوکار بررسی و جبران خسارات احتمالی.', 'قدردانی از صبر مردم و تلاش تیم‌های عملیاتی.'], keywords: ['گزارش', 'نوسازی', 'جبران خسارت', 'قدردانی'] }
+                ],
+                 roadmap: [
+                    { title: 'فاز ۱ (۰-۲ ساعت): پذیرش و عذرخواهی اولیه', action: '<strong>اقدام سخنگو:</strong> انتشار یک توییت فوری.', content: '<strong>محتوای کلیدی:</strong> "از قطعی گسترده برق و مشکلات ناشی از آن برای شهروندان عمیقاً متأسفیم. تیم‌های فنی وزارت نیرو در حال بررسی علت و رفع مشکل هستند. به محض مشخص شدن ابعاد، اطلاع‌رسانی کامل صورت می‌گیرد."', goal: '<strong>هدف:</strong> پیش‌دستی در عذرخواهی برای خنثی کردن خشم اولیه و پذیرش مسئولیت.' },
+                    { title: 'فاز ۲ (۲-۱۲ ساعت): مصاحبه رادیویی', action: '<strong>اقدام سخنگو:</strong> انجام مصاحبه زنده با رادیو سراسری (رسانه‌ای که در دسترس همگان حتی در زمان قطعی برق است).', content: '<strong>محتوای کلیدی:</strong> توضیح <strong>علت اولیه</strong> به زبان غیرفنی (مثلاً: "افزایش ناگهانی مصرف و خروج چند نیروگاه از مدار"). اعلام <strong>جدول زمان‌بندی تقریبی</strong> برای وصل شدن برق در مناطق مختلف.', goal: '<strong>هدف:</strong> اطلاع‌رسانی به گسترده‌ترین شکل ممکن و مدیریت انتظارات مردم با ارائه یک زمان‌بندی.' },
+                    { title: 'فاز ۳ (۱۲-۴۸ ساعت): نشست خبری با وزیر', action: '<strong>اقدام سخنگو:</strong> برگزاری نشست خبری مشترک با وزیر نیرو.', content: '<strong>محتوای کلیدی:</strong> سخنگو ابتدا مجدداً عذرخواهی کرده و بر جبران خسارت تاکید می‌کند. سپس وزیر نیرو جزئیات فنی دقیق و <strong>برنامه دولت برای جلوگیری از تکرار</strong> این اتفاق را تشریح می‌کند.', goal: '<strong>هدف:</strong> نمایش پاسخگویی در بالاترین سطح و تبدیل بحران به فرصتی برای اعلام برنامه‌های آینده.' }
+                ]
+            },
+            'security': {
+                title: '۴. امنیت ملی (حمله نظامی، ترور، گروگانگیری)',
+                principles: ['نمایش اقتدار و تسلط کامل.', 'قاب‌بندی فوری رویداد (اقدام تروریستی کور، تجاوز دشمن).', 'سیاست تک‌صدایی شدید و مطلق.', 'سکوت تاکتیکی برای حفظ اسرار عملیات.', 'پرهیز از انتشار اخبار تأییدنشده.', 'بزرگداشت قهرمانانه شهدا و نیروهای امنیتی.', 'معرفی سریع "دشمن" (گروهک، کشور متجاوز).', 'وعده انتقام سخت و پشیمان‌کننده.', 'انسجام‌بخشی ملی علیه دشمن مشترک.', 'انتشار تصاویر پیروزی و پایان عملیات.'],
+                phases: [
+                     { title: 'فاز اول: بیانیه اقتدار و کنترل', time: '۰-۱ ساعت', points: ['تأیید وقوع اقدام خصمانه (با عنوان "تجاوز نظامی" یا "حمله تروریستی").', 'تأکید قاطع بر تسلط کامل نیروهای مسلح بر اوضاع.', 'درخواست از مردم برای توجه صرف به رسانه‌های رسمی.', 'اعلام سکوت خبری تا اطلاع ثانوی برای موفقیت عملیات.'], keywords: ['اقتدار', 'تسلط', 'تروریستی', 'خصمانه'] },
+                     { title: 'فاز دوم: بیانیه تکمیلی (در صورت لزوم)', time: '۲-۶ ساعت', points: ['ارائه جزئیات بسیار محدود و کنترل‌شده.', 'تکذیب قاطع شایعات مشخص (مثلاً سقوط شهر، تعداد بالای تلفات).', 'تأکید مجدد بر تحت کنترل بودن اوضاع.', 'هشدار به رسانه‌های منتشرکننده اخبار کذب.'], keywords: ['جزئیات محدود', 'تکذیب', 'تحت کنترل', 'هشدار'] },
+                     { title: 'فاز سوم: بیانیه پیروزی و تبیین', time: 'پس از اتمام عملیات', points: ['اعلام پایان موفقیت‌آمیز عملیات و دفع حمله.', 'ارائه آمار دقیق شهدا و مجروحان و تلفات دشمن.', 'معرفی هویت و وابستگی عوامل حادثه.', 'وعده انتقام قاطع از آمران و عاملان در زمان و مکان مناسب.'], keywords: ['پیروزی', 'آمار', 'دشمن', 'انتقام'] }
+                ],
+                 roadmap: [
+                    { title: 'فاز ۱ (۰-۲ ساعت): بیانیه اقتدار', action: '<strong>اقدام سخنگو:</strong> قرائت یک بیانیه بسیار کوتاه و قاطع از تریبون رسمی دولت (پخش زنده تلویزیونی).', content: '<strong>محتوای کلیدی:</strong> "یک اقدام خصمانه و کور در [محل] رخ داد. نیروهای امنیتی و مسلح با اقتدار کامل بر اوضاع مسلط هستند. اخبار تکمیلی صرفاً از طریق همین مرجع اعلام خواهد شد."', goal: '<strong>هدف:</strong> قاب‌بندی فوری روایت (حمله خارجی/تروریستی، نه چیز دیگر) و نمایش تسلط کامل.' },
+                    { title: 'فاز ۲ (۲-۱۲ ساعت): سکوت مدیریت‌شده', action: '<strong>اقدام سخنگو:</strong> اعلام "سکوت خبری تاکتیکی". در پاسخ به تماس خبرنگاران، دفتر سخنگو فقط یک جمله تکرار می‌کند: "برای حفظ موفقیت عملیات دفاعی، تا اطلاع ثانوی هیچ اطلاعات جدیدی منتشر نمی‌شود."', goal: '<strong>هدف:</strong> افزایش اعتبار و اهمیت بیانیه‌های بعدی و جلوگیری از انتشار اطلاعات ضد و نقیض.' },
+                    { title: 'فاز ۳ (۱۲-۴۸ ساعت): نشست خبری اعلام پیروزی', action: '<strong>اقدام سخنگو:</strong> برگزاری نشست خبری با حضور سخنگوی ستاد کل نیروهای مسلح.', content: '<strong>محتوای کلیدی:</strong> اعلام <strong>جزئیات دفع حمله و موفقیت عملیات</strong> (تعداد مهاجمان، سرنوشت آنها، تعداد شهدا و مجروحان). مهم‌تر از همه، <strong>معرفی دشمن</strong> (وابستگی مهاجمان به کدام گروه یا کشور) و وعده "پاسخ قاطع و پشیمان‌کننده".', goal: '<strong>هدف:</strong> نمایش پیروزی و اقتدار، بسیج افکار عمومی علیه دشمن معرفی‌شده و پایان دادن به تمام شایعات.' }
+                ]
+            },
+            'economic': {
+                title: '۵. اقتصادی (جهش ارز، تورم شدید)',
+                principles: ['آرام‌سازی روانی بازار.', 'کوچک‌نمایی بحران (نسبت دادن به عوامل روانی).', 'نمایش تسلط بانک مرکزی و ابزارهای کنترلی.', 'معرفی دشمن (سفته‌بازان، کانال‌های تلگرامی).', 'پرهیز از دادن وعده‌های قیمتی دقیق (مثلاً دلار X تومان می‌شود).', 'تأکید بر قدرت بنیادین اقتصاد ملی.', 'نمایش برخورد قاطع با اخلالگران.', 'مرجعیت‌بخشی به آمار و تحلیل‌های رسمی.', 'جلب همراهی فعالان اقتصادی معتبر.', 'تبدیل تهدید به فرصتی برای اصلاحات ساختاری.'],
+                phases: [
+                    { title: 'فاز اول: بیانیه آرام‌بخش', time: '۰-۳ ساعت', points: ['اعلام اینکه دولت و بانک مرکزی اوضاع را رصد می‌کنند.', 'نسبت دادن نوسانات به "هیجانات کاذب" و "سفته‌بازی".', 'تأکید بر وجود ذخایر ارزی کافی.', 'هشدار به فعالان اقتصادی در مورد ریسک بالای خریدهای هیجانی.'], keywords:['آرامش', 'هیجانات', 'بانک مرکزی', 'سفته بازی'] },
+                    { title: 'فاز دوم: بیانیه اقدام فنی', time: '۴-۲۴ ساعت', points: ['اعلام اقدامات مشخص بانک مرکزی (مثلاً عرضه ارز، تغییر نرخ بهره).', 'توضیح این اقدامات توسط یک مقام فنی (معاون بانک مرکزی).', 'اعلام آغاز برخورد با کانال‌ها و عوامل اخلال‌گر بازار.', 'فراخوان به فعالان اقتصادی برای بازگرداندن ثبات.'], keywords:['عرضه ارز', 'نرخ بهره', 'برخورد', 'اخلالگران'] },
+                    { title: 'فاز سوم: بیانیه کنترل و پاسخگویی', time: '۲-۵ روز', points: ['ارائه گزارش از نتایج اقدامات (کاهش نرخ، دستگیری‌ها).', 'اعلام سیاست‌های میان‌مدت برای مدیریت بازار.', 'تأکید بر عزم دولت برای اصلاح ساختارهای اقتصادی.', 'قدردانی از همراهی مردم و فعالان اقتصادی در بازگشت ثبات.'], keywords:['نتایج', 'کاهش نرخ', 'دستگیری', 'سیاست'] }
+                ],
+                 roadmap: [
+                    { title: 'فاز ۱ (۰-۲ ساعت): پیام آرام‌بخش', action: '<strong>اقدام سخنگو:</strong> یک مصاحبه کوتاه از پیش ضبط شده با یک خبرگزاری رسمی.', content: '<strong>محتوای کلیدی:</strong> "نوسانات اخیر در بازار ارز عمدتاً ناشی از <strong>هیجانات روانی و عملیات سفته‌بازی</strong> است. بانک مرکزی ابزارهای لازم برای مدیریت بازار را در اختیار دارد و به زودی شرایط به ثبات بازخواهد گشت."', goal: '<strong>هدف:</strong> کوچک‌سازی ابعاد بحران (روانی، نه بنیادی) و تزریق آرامش به بازار.' },
+                    { title: 'فاز ۲ (۲-۱۲ ساعت): نشست خبری با محوریت بانک مرکزی', action: '<strong>اقدام سخنگو:</strong> برگزاری نشست خبری که در آن، پس از مقدمه‌ای کوتاه، معاون ارزی بانک مرکزی اقدامات فنی (مانند حجم ارز تزریق شده، نرخ جدید در بازار متشکل و...) را اعلام می‌کند.', content: '<strong>محتوای کلیدی:</strong> تمرکز بر <strong>اعداد و ارقام و اقدامات فنی</strong>. سخنگو باید هرگونه سوال سیاسی را به بعد موکول کرده و فضا را کاملاً اقتصادی نگه دارد.', goal: '<strong>هدف:</strong> نمایش تسلط فنی دولت بر بازار و دور کردن بحران از حوزه سیاسی.' },
+                    { title: 'فاز ۳ (۱۲-۴۸ ساعت): اعلام خبر برخورد', action: '<strong>اقدام سخنگو:</strong> اعلام یک خبر مهم در ابتدای نشست هفتگی خود.', content: '<strong>محتوای کلیدی:</strong> "با هماهنگی قوه قضائیه و نهادهای اطلاعاتی، شبکه‌های اصلی اخلال‌گر در بازار ارز شناسایی و ده‌ها نفر از عوامل آنها دستگیر شدند."', goal: '<strong>هدف:</strong> معرفی یک "مقصر" ملموس برای تخلیه نارضایتی عمومی و نمایش قاطعیت دولت در برخورد با عوامل اخلال.' }
+                ]
+            },
+            'political': {
+                title: '۶. سیاسی/حکمرانی (فساد، استعفا)',
+                principles: ['پیش‌دستی در افشاگری و محکومیت.', 'عذرخواهی صریح و پذیرش مسئولیت سیاسی.', 'شفافیت کامل در اعلام جزئیات پرونده.', 'اعلام برخورد قاطع و بدون ملاحظه با متخلف.', 'جداسازی فرد خاطی از کلیت دولت.', 'نمایش عزم جدی برای اصلاح فرآیندها.', 'پرهیز از فرافکنی و اتهام‌زنی سیاسی.', 'استفاده از بحران به عنوان فرصت پاکسازی.', 'ارائه گزارش مستمر از روند رسیدگی قضایی.', 'بازگرداندن سریع آرامش به فضای سیاسی.'],
+                phases: [{title: 'فاز اول: بیانیه پیش‌دستانه و قاطع', time: '۰-۲ ساعت', points: ['اعلام کشف یک مورد فساد توسط خود دولت.', 'محکومیت شدید و ابراز انزجار از سوی دولت.', 'اعلام برکناری فوری فرد یا افراد متخلف.', 'تأکید بر اینکه دولت خود پیگیر برخورد قضایی است.'], keywords:['کشف فساد', 'برکناری', 'محکومیت', 'قضایی']}, {title: 'فاز دوم: بیانیه شفاف‌سازی و مسئولیت‌پذیری', time: '۶-۲۴ ساعت', points: ['ارائه جزئیات پرونده (بدون ورود به مسائل محرمانه قضایی).', 'عذرخواهی رسمی سخنگو از مردم به دلیل این رخداد.', 'تشریح اقداماتی که برای اصلاح فرآیندها آغاز شده.', 'معرفی یک مسئول برای پیگیری ویژه پرونده.'], keywords:['جزئیات', 'عذرخواهی', 'اصلاح فرآیند', 'پیگیری']}, {title: 'فاز سوم: بیانیه عادی‌سازی و نگاه به آینده', time: '۳-۷ روز', points: ['ارائه آخرین گزارش از وضعیت پرونده قضایی.', 'تأکید بر اینکه این یک مورد استثنا بوده و کلیت دولت پاکدست است.', 'تغییر تمرکز رسانه‌ها به سمت برنامه‌های اصلی و خدمات دولت.', 'نمایش تداوم کار دولت بدون تأثیرپذیری از حواشی.'], keywords:['گزارش', 'استثنا', 'پاکدست', 'عادی‌سازی']}],
+                roadmap: [{title: 'فاز ۱ (۰-۲ ساعت): بیانیه پیش‌دستانه', action: '<strong>اقدام سخنگو:</strong> برگزاری یک نشست خبری اضطراری.', content: '<strong>محتوای کلیدی:</strong> "متأسفانه باید اعلام کنم که بنا بر گزارش نهادهای نظارتی خود دولت، سوء جریانی در [نام دستگاه] کشف شده است. رئیس‌جمهور دستور برکناری فوری فرد متخلف و معرفی او به دستگاه قضا را صادر کرده‌اند. ما در برخورد با فساد با هیچکس تعارف نداریم."', goal: '<strong>هدف:</strong> تبدیل شدن از "متهم" به "مدعی" و قرار گرفتن در کنار مردم علیه فساد.'}, {title: 'فاز ۲ (۲-۱۲ ساعت): مصاحبه تلویزیونی', action: '<strong>اقدام سخنگو:</strong> حضور در یک برنامه گفتگومحور تلویزیونی.', content: '<strong>محتوای کلیدی:</strong> عذرخواهی رسمی از مردم. توضیح اینکه چگونه "سیستم خوداصلاحی دولت" این فساد را کشف کرده و تشریح فرآیندهایی که برای جلوگیری از تکرار آن در حال طراحی است.', goal: '<strong>هدف:</strong> نمایش مسئولیت‌پذیری و تبدیل بحران به فرصتی برای نمایش اراده دولت برای اصلاحات.'}, {title: 'فاز ۳ (۱۲-۴۸ ساعت): عادی‌سازی', action: '<strong>اقدام سخنگو:</strong> در نشست خبری هفتگی، در پاسخ به سوالی در این مورد، پاسخ کوتاهی می‌دهد.', content: '<strong>محتوای کلیدی:</strong> "پرونده مسیر قضایی خود را طی می‌کند و ما نیز پیگیر آن هستیم. اکنون اجازه دهید به مسائل اصلی کشور و خدمات دولت بپردازیم..."', goal: '<strong>هدف:</strong> بازگرداندن تمرکز رسانه‌ها به اولویت‌های دولت و جلوگیری از تبدیل شدن فساد به موضوع اصلی کشور.'}]
+            },
+            'international': {
+                title: '۷. بین‌المللی (تحریم، تعرض)',
+                principles: ['تأکید بر استقلال و عزت ملی.', 'کوچک‌نمایی تأثیر اقدامات دشمن.', 'معرفی دشمن به عنوان ناقض قوانین بین‌المللی.', 'بسیج افکار عمومی داخلی در حمایت از موضع نظام.', 'تأکید بر حق مشروع ایران برای پاسخ.', 'نمایش دیپلماسی فعال در کنار اقتدار نظامی.', 'اطلاع‌رسانی در مورد حمایت سایر کشورها (در صورت وجود).', 'قاب‌بندی بحران به عنوان تقابل حق و باطل.', 'اطمینان‌بخشی به مردم در مورد عدم تأثیر بر زندگی روزمره.', 'استفاده از ظرفیت رسانه‌های بین‌المللی برای تبیین موضع.'],
+                phases: [{title: 'فاز اول: بیانیه محکومیت و اقتدار', time: '۰-۲ ساعت', points: ['محکومیت شدید اقدام طرف مقابل (مثلاً تحریم جدید).', 'غیرقانونی و غیرانسانی خواندن این اقدام.', 'تأکید بر بی‌اثر بودن آن بر اراده ملت ایران.', 'اعلام حق ایران برای اقدام متقابل.'], keywords:['محکومیت', 'اقتدار', 'غیرقانونی', 'حق پاسخ']}, {title: 'فاز دوم: بیانیه حقوقی و دیپلماتیک', time: '۶-۲۴ ساعت', points: ['تشریح ابعاد حقوقی و مغایرت اقدام با قوانین بین‌المللی.', 'اعلام پیگیری موضوع از طریق مجامع جهانی.', 'گزارش از رایزنی‌های دیپلماتیک با کشورهای دوست و همسو.', 'فراخوان به جامعه جهانی برای محکوم کردن این اقدام.'], keywords:['حقوقی', 'دیپلماتیک', 'رایزنی', 'مجامع جهانی']}, {title: 'فاز سوم: بیانیه اقدام متقابل', time: '۱-۳ روز', points: ['اعلام اقدام متقابل و هوشمندانه ایران.', 'تأکید بر اینکه این اقدام در چارچوب حقوق بین‌الملل است.', 'نمایش قدرت بازدارندگی ایران.', 'فراخوان مجدد طرف مقابل به بازگشت به تعهدات.'], keywords:['اقدام متقابل', 'هوشمندانه', 'بازدارندگی', 'تعهدات']}],
+                roadmap: [{title: 'فاز ۱ (۰-۲ ساعت): اعلام موضع قاطع', action: '<strong>اقدام سخنگو:</strong> انتشار یک بیانیه رسمی به دو زبان فارسی و انگلیسی.', content: '<strong>محتوای کلیدی:</strong> "اقدام اخیر [نام کشور] نقض صریح [نام معاهده یا قانون بین‌المللی] و نمونه بارز یک‌جانبه‌گرایی است. این اقدام هیچ تأثیری بر اراده ملت ایران نخواهد داشت و حق پاسخگویی برای جمهوری اسلامی ایران محفوظ است."', goal: '<strong>هدف:</strong> قاب‌بندی فوری روایت (ایران قربانی یک اقدام غیرقانونی است) و نمایش اقتدار.'}, {title: 'فاز ۲ (۲-۱۲ ساعت): کنفرانس خبری', action: '<strong>اقدام سخنگو:</strong> برگزاری کنفرانس خبری با حضور رسانه‌های داخلی و بین‌المللی.', content: '<strong>محتوای کلیدی:</strong> سخنگو به تفصیل توضیح می‌دهد که چرا اقدام طرف مقابل غیرقانونی است و به سوالات حقوقی پاسخ می‌دهد. همچنین از رایزنی‌های دیپلماتیک با کشورهای دیگر خبر می‌دهد.', goal: '<strong>هدف:</strong> نمایش دیپلماسی فعال و ایجاد یک جبهه بین‌المللی (هرچند کوچک) علیه اقدام دشمن.'}, {title: 'فاز ۳ (۱۲-۴۸ ساعت): اعلام اقدام متقابل', action: '<strong>اقدام سخنگو:</strong> اعلام خبر اقدام متقابل ایران (مثلاً: "در پاسخ به اقدام غیرقانونی، ایران نیز تعهدات خود را در فلان حوزه کاهش می‌دهد").', content: '<strong>محتوای کلیدی:</strong> تمرکز بر "هوشمندانه" و "متناسب" بودن پاسخ ایران.', goal: '<strong>هدف:</strong> نمایش اینکه ایران منفعل نیست و برای هر اقدامی، پاسخی درخور دارد.'}]
+            },
+            'social-cultural': {
+                title: '۸. اجتماعی-فرهنگی (تنش‌های قومی، اجتماعی)',
+                principles: ['تأکید بر وحدت ملی و یکپارچگی سرزمینی.', 'احترام به تنوع فرهنگی و قومی.', 'پرهیز از انگ‌زنی به یک گروه خاص.', 'معرفی "دشمن خارجی" به عنوان عامل تفرقه‌افکنی.', 'انسانی‌سازی و تمرکز بر مشترکات.', 'فعال‌سازی چهره‌های فرهنگی و اجتماعی مورد اعتماد.', 'نمایش گفتگوی دولت با نخبگان قومی و محلی.', 'وعده رسیدگی به مطالبات مشروع و قانونی.', 'برخورد قاطع با عوامل آشوبگر (جداسازی از مردم).', 'عادی‌سازی سریع فضا و ترویج آشتی ملی.'],
+                phases: [{title: 'فاز اول: بیانیه دعوت به آرامش و وحدت', time: '۰-۳ ساعت', points: ['ابراز نگرانی از بروز تنش.', 'دعوت همه طرف‌ها به آرامش و خویشتن‌داری.', 'تأکید بر وحدت ملی و هوشیاری در برابر توطئه‌های دشمن.', 'اعلام اینکه دولت در حال بررسی دقیق ماجراست.'], keywords:['وحدت', 'آرامش', 'دشمن', 'بررسی']}, {title: 'فاز دوم: بیانیه تفکیک و گفت‌وگو', time: '۶-۲۴ ساعت', points: ['تفکیک مطالبات به‌حق مردم از اقدامات خشونت‌آمیز.', 'محکومیت خشونت و تخریب اموال عمومی.', 'اعلام آمادگی دولت برای گفتگو با نخبگان و نمایندگان محلی.', 'هشدار به عوامل خارجی و رسانه‌های معاند.'], keywords:['تفکیک', 'گفتگو', 'مطالبات', 'خشونت']}, {title: 'فاز سوم: بیانیه اقدام و آشتی', time: '۲-۵ روز', points: ['اعلام نتایج بررسی‌ها و پذیرش قصور احتمالی.', 'معرفی اقدامات عملی برای پاسخ به مطالبات مشروع.', 'گزارش از برخورد با عوامل اصلی خشونت‌ها.', 'نمایش تصاویری از بازگشت آرامش و آشتی ملی (مثلاً جلسات مشترک).'] , keywords:['نتایج', 'قصور', 'اقدامات', 'آشتی']}],
+                roadmap: [{title: 'فاز ۱ (۰-۲ ساعت): بیانیه وحدت', action: '<strong>اقدام سخنگو:</strong> انتشار یک پیام ویدئویی کوتاه.', content: '<strong>محتوای کلیدی:</strong> "ایران خانه همه ماست. اجازه ندهیم سوءتفاهم‌ها و توطئه‌های دشمنان، این همبستگی تاریخی را خدشه‌دار کند. دولت با حساسیت کامل در حال بررسی ریشه‌های این تنش است و همه را به آرامش دعوت می‌کند."', goal: '<strong>هدف:</strong> قاب‌بندی بحران به عنوان یک "سوءتفاهم داخلی" که توسط "دشمن خارجی" تحریک شده است.'}, {title: 'فاز ۲ (۲-۱۲ ساعت): نمایش گفتگو', action: '<strong>اقدام سخنگو:</strong> انتشار عکس و خبر دیدار یک مقام ارشد دولتی (مثلاً معاون سیاسی وزیر کشور) با جمعی از <strong>نخبگان و چهره‌های مورد احترام محلی/قومی</strong>.', content: '<strong>محتوای کلیدی:</strong> "دولت به مطالبات قانونی و فرهنگی مردم احترام می‌گذارد و راه حل مشکلات را در گفتگوی صمیمانه می‌داند."', goal: '<strong>هدف:</strong> نمایش اینکه دولت در حال تعامل با "مردم" است و صف آنها را از "آشوبگران" جدا می‌کند.'}, {title: 'فاز ۳ (۱۲-۴۸ ساعت): اعلام نتایج و برخورد', action: '<strong>اقدام سخنگو:</strong> در یک نشست خبری، نتایج کمیته حقیقت‌یاب را اعلام می‌کند.', content: '<strong>محتوای کلیدی:</strong> دو بخش اصلی: ۱) "بررسی‌های ما نشان داد بخشی از مطالبات مردم منطقه به‌حق بوده و دولت برنامه [نام برنامه] را برای رفع آن آغاز کرده است." ۲) "همزمان، عوامل اصلی ایجاد خشونت که با سرویس‌های خارجی در ارتباط بودند، شناسایی و دستگیر شدند."', goal: '<strong>هدف:</strong> تفکیک کامل بین "مردم" و "دشمن"، پاسخگویی به مطالبات مشروع و نمایش قاطعیت در برابر عوامل خشونت.'}]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const crisisSelector = document.getElementById('crisis-selector');
+            const roadmapAccordion = document.getElementById('roadmap-accordion');
+            const analysisCrisisTypeSelect = document.getElementById('analysisCrisisType');
+
+            // Generate crisis buttons, roadmap items, and analysis options
+            for (const key in crisisData) {
+                const data = crisisData[key];
+                
+                // Section 2: Protocol Buttons
+                const button = document.createElement('button');
+                button.className = 'crisis-btn';
+                button.dataset.crisis = key;
+                button.textContent = data.title;
+                crisisSelector.appendChild(button);
+                
+                // Section 3: Roadmap Accordion
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+                const accordionHeader = document.createElement('div');
+                accordionHeader.className = 'accordion-header';
+                accordionHeader.textContent = data.title;
+                const accordionContent = document.createElement('div');
+                accordionContent.className = 'accordion-content';
+                const contentWrapper = document.createElement('div');
+                contentWrapper.style.padding = '20px 0';
+                data.roadmap.forEach(phase => {
+                    const phaseCard = document.createElement('div');
+                    phaseCard.className = 'phase-card';
+                    phaseCard.innerHTML = `<div class="phase-header"><h4>${phase.title}</h4></div><p>${phase.action}</p><p>${phase.content}</p><p>${phase.goal}</p>`;
+                    contentWrapper.appendChild(phaseCard);
+                });
+                accordionContent.appendChild(contentWrapper);
+                accordionItem.appendChild(accordionHeader);
+                accordionItem.appendChild(accordionContent);
+                roadmapAccordion.appendChild(accordionItem);
+
+                // Section 4: Analysis Tool Select Options
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = data.title;
+                analysisCrisisTypeSelect.appendChild(option);
+            }
+
+            // Event Listeners
+            crisisSelector.addEventListener('click', handleCrisisSelection);
+            roadmapAccordion.addEventListener('click', handleAccordionToggle);
+            document.getElementById('analyzeButton').addEventListener('click', handleAnalysisRequest);
+            document.querySelectorAll('.nav-link, .hero-nav .btn').forEach(anchor => {
+                anchor.addEventListener('click', handleSmoothScroll);
+            });
+        });
+
+        function handleCrisisSelection(e) {
+            if (e.target && e.target.matches('button.crisis-btn')) {
+                const crisisKey = e.target.dataset.crisis;
+                displayCrisisProtocol(crisisKey);
+                document.querySelectorAll('.crisis-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        }
+
+        function handleAccordionToggle(e) {
+            if (e.target && e.target.matches('.accordion-header')) {
+                const item = e.target.parentElement;
+                const content = item.querySelector('.accordion-content');
+                const isActive = item.classList.contains('active');
+
+                // Close all other items
+                document.querySelectorAll('#roadmap-accordion .accordion-item.active').forEach(activeItem => {
+                    if (activeItem !== item) {
+                        activeItem.classList.remove('active');
+                        activeItem.querySelector('.accordion-content').style.maxHeight = null;
+                        activeItem.querySelector('.accordion-content').style.padding = '0 20px';
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active', !isActive);
+                if (!isActive) {
+                    content.style.maxHeight = content.scrollHeight + 40 + "px";
+                    content.style.padding = '20px';
+                } else {
+                    content.style.maxHeight = null;
+                    content.style.padding = '0 20px';
+                }
+            }
+        }
+
+        function handleAnalysisRequest() {
+            const crisisKey = document.getElementById('analysisCrisisType').value;
+            const phaseIndex = document.getElementById('analysisPhase').value;
+            const statementText = document.getElementById('statementInput').value;
+            const resultWrapper = document.getElementById('analysisResultWrapper');
+            const resultDiv = document.getElementById('analysisResult');
+            const suggestedWrapper = document.getElementById('suggestedStatementWrapper');
+
+            if (statementText.trim() === '') {
+                alert('لطفاً پیش‌نویس بیانیه را وارد کنید.');
+                return;
+            }
+
+            resultWrapper.style.display = 'block';
+            suggestedWrapper.style.display = 'none';
+            resultDiv.innerHTML = '<div class="spinner"></div>';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            setTimeout(() => {
+                const { report, suggestion } = generateAnalysis(statementText, crisisKey, parseInt(phaseIndex));
+                resultDiv.innerHTML = report;
+                
+                const suggestedDiv = document.getElementById('suggestedStatement');
+                suggestedDiv.textContent = suggestion;
+                suggestedWrapper.style.display = 'block';
+
+            }, 2000); // 2-second delay for simulation
+        }
+
+        function handleSmoothScroll(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function displayCrisisProtocol(crisisKey) {
+            const data = crisisData[crisisKey];
+            const outputSection = document.getElementById('outputSection');
+            const crisisTitle = document.getElementById('crisisTitle');
+            const specificPrinciplesList = document.getElementById('specificPrinciplesList');
+            const phasesContainer = outputSection.querySelector('.phases-container');
+
+            crisisTitle.textContent = data.title;
+            specificPrinciplesList.innerHTML = '';
+            data.principles.forEach(principle => {
+                const li = document.createElement('li');
+                li.textContent = principle;
+                specificPrinciplesList.appendChild(li);
+            });
+
+            phasesContainer.innerHTML = '';
+            data.phases.forEach(phase => {
+                const card = document.createElement('div');
+                card.className = 'phase-card';
+                let pointsHtml = `<ul>${phase.points.map(p => `<li>${p}</li>`).join('')}</ul>`;
+                card.innerHTML = `<div class="phase-header"><h4>${phase.title}</h4><span class="timeframe">${phase.time}</span></div>${pointsHtml}`;
+                phasesContainer.appendChild(card);
+            });
+
+            outputSection.style.display = 'block';
+            outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        /***** START OF MODIFIED SECTION *****/
+        function generateAnalysis(text, crisisKey, phaseIndex) {
+            // This is an advanced simulation of an AI model that now generates a new statement from scratch.
+            const crisisInfo = crisisData[crisisKey];
+            const phaseInfo = crisisInfo.phases[phaseIndex - 1];
+            
+            // --- Part 1: Analyze the user's original text (for reporting) ---
+            let score = 0;
+            let report = `<strong>تحلیل بیانیه اولیه شما برای: ${crisisInfo.title} - ${phaseInfo.title}</strong>\n\n`;
+            let improvements = [];
+
+            // 1. Check against general principles
+            if (text.includes('متاسفیم') || text.includes('عذرخواهی') || text.includes('همدلی') || text.includes('تاسف')) { score++; report += '✅ (عمومی) رعایت اصل همدلی/مسئولیت‌پذیری.\n'; }
+            else { improvements.push('بیانیه فاقد لحن همدلانه یا عذرخواهی صریح است (اصل ۳ و ۱۰).'); }
+
+            if (text.includes('اقدام') || text.includes('دستور') || text.includes('تیم') || text.includes('بسیج')) { score++; report += '✅ (عمومی) رعایت اصل نمایش عمل (اصل ۴).\n'; }
+            else { improvements.push('اشاره مستقیمی به اقدامات عملی نشده است (اصل ۴).'); }
+            
+            // 2. Check against crisis-specific principles (Framing)
+            let specificPrincipleMet = false;
+            if (crisisKey === 'security' && (text.includes('کور') || text.includes('اقتدار') || text.includes('خصمانه'))) { specificPrincipleMet = true; }
+            if (crisisKey === 'technical-infra' && (text.includes('عذرخواهی'))) { specificPrincipleMet = true; }
+            if (crisisKey === 'economic' && (text.includes('هیجانی') || text.includes('روانی'))) { specificPrincipleMet = true; }
+            if (crisisKey === 'natural-disaster' && (text.includes('همدلی') || text.includes('فاجعه'))) { specificPrincipleMet = true; }
+            
+            if (specificPrincipleMet) { score+=2; report += '✅ (اختصاصی) قاب‌بندی بیانیه با اصول اختصاصی این بحران همخوانی دارد.\n'; }
+            else { improvements.push(`قاب‌بندی بیانیه (اصل ۶) با الگوی پیشنهادی برای این بحران مطابقت کامل ندارد.`); }
+
+            // 3. Check against phase-specific keywords/goals
+            let phaseGoalMet = false;
+            phaseInfo.keywords.forEach(kw => { if (text.includes(kw)) phaseGoalMet = true; });
+            if (phaseGoalMet) { score+=2; report += `✅ (فازی) محتوا با اهداف ${phaseInfo.title} تطابق دارد.\n`; }
+            else { improvements.push(`محتوای بیانیه با هدف اصلی فاز ${phaseIndex} (که باید شامل کلماتی کلیدی مانند «${phaseInfo.keywords.join('، ')}» باشد) فاصله دارد.`); }
+
+            // --- Part 2: Generate a new, ideal statement from scratch ---
+            let suggestion = '';
+            
+            // Helper to find context (like location or a number) from user's text
+            const findContext = (regex, fallback) => {
+                const match = text.match(regex);
+                return match ? match[0] : fallback;
+            };
+
+            // Rebuild the statement based on protocol
+            let location = findContext(/در\s+([^\s]+)/, '[محل حادثه]');
+            if (location.startsWith('در ')) location = location.substring(3);
+            let number = findContext(/\d+/, '');
+            
+            switch(crisisKey) {
+                case 'natural-disaster':
+                    if(phaseIndex === 1) suggestion = `با ابراز تاسف و همدلی عمیق با هم‌وطنان آسیب‌دیده در حادثه ${location}، به اطلاع می‌رساند به دستور رئیس جمهور، تمام امکانات کشور برای نجات جان عزیزانمان بسیج شده است. دولت بر اوضاع کنترل کامل دارد و گزارش اقدامات متعاقبا اعلام خواهد شد.`;
+                    else if (phaseIndex === 2) suggestion = `اولین تیم‌های ارزیاب و امدادی به منطقه ${location} رسیده‌اند. طبق گزارش‌های اولیه، ${number || 'تعدادی'} مصدوم شناسایی شده‌اند. از مردم تقاضا می‌شود از تجمع در محل حادثه خودداری کرده و اخبار را فقط از مراجع رسمی دنبال کنند.`;
+                    else suggestion = `تاکنون بیش از ${number || 'هزاران قلم'} اقلام امدادی شامل چادر و پتو در منطقه ${location} توزیع شده است. ضمن قدردانی از صبر مردم و تلاش‌های جهادی، برنامه دولت برای اسکان موقت و بازسازی مناطق آسیب‌دیده به زودی اعلام می‌شود.`;
+                    break;
+                case 'technical-infra':
+                    if(phaseIndex === 1) suggestion = `به دلیل بروز اختلال فنی در شبکه، شاهد قطعی ${location.includes('برق') ? 'برق' : 'انرژی'} در بخش‌هایی از کشور هستیم. ضمن عذرخواهی صریح از تمام شهروندان به دلیل مشکلات پیش‌آمده، به اطلاع می‌رساند تیم‌های فنی در حال رفع کامل مشکل هستند.`;
+                    else if (phaseIndex === 2) suggestion = `علت اصلی اختلال، ${number || 'فشار'} بر شبکه تشخیص داده شده است. جدول زمان‌بندی تقریبی رفع مشکل در مناطق مختلف از طریق رسانه‌ها اعلام خواهد شد. از صبر و شکیبایی شما سپاسگزاریم.`;
+                    else suggestion = `با تلاش بی‌وقفه تیم‌های عملیاتی، مشکل قطعی در اکثر مناطق رفع گردیده است. دولت برنامه نوسازی زیرساخت‌ها را برای جلوگیری از تکرار این حوادث در دستور کار فوری قرار داده و سازوکار جبران خسارت مشترکین در حال بررسی است.`;
+                    break;
+                case 'security':
+                    if(phaseIndex === 1) suggestion = `عصر امروز یک اقدام تروریستی کور در ${location} رخ داد. نیروهای امنیتی و مسلح با اقتدار کامل بر اوضاع مسلط هستند. برای حفظ موفقیت عملیات، از مردم درخواست می‌شود از انتشار اخبار غیرموثق خودداری کرده و به اطلاعیه‌های رسمی توجه کنند.`;
+                    else if (phaseIndex === 2) suggestion = `در ادامه عملیات ضدتروریستی در ${location}، ${number || 'چند تن'} از عوامل اصلی به هلاکت رسیدند. اوضاع کاملا تحت کنترل است. هرگونه شایعه در خصوص وسعت حادثه قویا تکذیب می‌شود.`;
+                    else suggestion = `با رشادت نیروهای امنیتی، عملیات دفع حمله تروریستی در ${location} با موفقیت کامل پایان یافت و تمام عوامل آن به هلاکت رسیده یا دستگیر شدند. هویت و وابستگی این گروهک تروریستی به زودی اعلام خواهد شد. ایران اسلامی انتقام خون شهدا را خواهد گرفت.`;
+                    break;
+                default:
+                    // Generic template for other crises
+                    suggestion = phaseInfo.points.join(' ');
+            }
+
+            // --- Part 3: Finalize the report ---
+            let finalScore = Math.round((score / 5) * 10);
+            report += '\n<hr>\n<strong>جمع‌بندی و امتیاز نهایی بیانیه اولیه شما:</strong>\n';
+            report += `⭐ <strong>امتیاز کلی: ${finalScore}/10</strong>\n\n`;
+
+            if (improvements.length > 0) {
+                report += '<strong>نقاط ضعف اصلی بیانیه شما:</strong>\n<ul>' + improvements.map(i => `<li>${i}</li>`).join('') + '</ul>';
+            } else {
+                report += '<strong>نقطه ضعف مشخصی یافت نشد.</strong> بیانیه شما ساختار قدرتمندی دارد.\n';
+            }
+
+            return { report, suggestion };
+        }
+        /***** END OF MODIFIED SECTION *****/
+
+    </script>
+</body>
+</html>
