@@ -512,10 +512,10 @@
             </div>
         </section>
 
-        <!-- =========== SECTION 4: ENHANCED ANALYSIS TOOL =========== -->
+        <!-- =========== SECTION 4: ENHANCED ANALYSIS TOOL (UPDATED TO GENERATOR) =========== -->
         <section id="analysis" class="content-section">
-            <h2>بخش چهارم: ابزار نقد و تحلیل هوشمند بیانیه</h2>
-            <p>برای دریافت تحلیل دقیق، ابتدا نوع بحران و فاز زمانی بیانیه را مشخص کنید، سپس پیش‌نویس خود را وارد نمایید. هوش مصنوعی بیانیه شما را بر اساس تمام پروتکل‌های مرتبط نقد کرده و یک نسخه اصلاح‌شده پیشنهاد می‌دهد.</p>
+            <h2>بخش چهارم: مولد بیانیه هوشمند</h2>
+            <p>جزئیات اولیه بحران را وارد کنید. هوش مصنوعی با توجه به اصول کلان (بخش ۱)، پروتکل‌های بیانیه (بخش ۲) و نقشه راه سخنگو (بخش ۳)، یک بیانیه استاندارد و خلاقانه تولید می‌کند.</p>
             <div class="analysis-tool">
                 <div class="analysis-tool-controls">
                     <div class="form-group">
@@ -525,7 +525,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="analysisPhase">۲. فاز بیانیه را انتخاب کنید:</label>
+                        <label for="analysisPhase">۲. فاز زمانی را انتخاب کنید:</label>
                         <select id="analysisPhase">
                             <option value="1">فاز اول (بیانیه اولیه)</option>
                             <option value="2">فاز دوم (بیانیه عملیاتی/تکمیلی)</option>
@@ -533,16 +533,73 @@
                         </select>
                     </div>
                 </div>
-                <label for="statementInput" style="font-weight: 700; color: var(--primary-color);">۳. متن پیش‌نویس بیانیه را وارد کنید:</label>
-                <textarea id="statementInput" placeholder="متن بیانیه خود را اینجا وارد کنید..."></textarea>
-                <button id="analyzeButton">تحلیل و اصلاح پیش‌نویس</button>
-                <div id="analysisResultWrapper">
-                    <h4>نتیجه تحلیل هوش مصنوعی:</h4>
-                    <div id="analysisResult"></div>
-                    <div id="suggestedStatementWrapper" style="display: none;">
-                        <h5>بیانیه پیشنهادی جایگزین:</h5>
-                        <div id="suggestedStatement"></div>
+                <div class="analysis-tool-controls">
+                    <div class="form-group">
+                        <label for="detailsLocation">۳. مکان بحران</label>
+                        <input id="detailsLocation" type="text" placeholder="نام شهر/استان/محل" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;" />
                     </div>
+                    <div class="form-group">
+                        <label for="detailsTime">۴. زمان وقوع</label>
+                        <input id="detailsTime" type="text" placeholder="مثلاً ۱۴۰۳/۰۷/۲۰ - ساعت ۱۴:۳۰ یا 'ظهر امروز'" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsSeverity">۵. شدت/دامنه</label>
+                        <select id="detailsSeverity" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;">
+                            <option value="">انتخاب کنید</option>
+                            <option value="low">ملایم</option>
+                            <option value="medium">متوسط</option>
+                            <option value="high">شدید</option>
+                            <option value="critical">بحرانی/ملی</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsCasualties">۶. تلفات/مجروحان (تقریبی)</label>
+                        <input id="detailsCasualties" type="text" placeholder="مثلاً ۲۰ مجروح، ۲ فوتی" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;" />
+                    </div>
+                </div>
+                <div class="analysis-tool-controls">
+                    <div class="form-group">
+                        <label for="detailsActions">۷. اقدامات انجام‌شده تا این لحظه</label>
+                        <textarea id="detailsActions" placeholder="تیم‌های امدادی اعزام شده‌اند، مسیرهای امن اعلام شده و ..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsNeeds">۸. نیازهای فوری</label>
+                        <textarea id="detailsNeeds" placeholder="نیاز به اسکان موقت، تجهیزات پزشکی، پاکسازی مسیرها و ..."></textarea>
+                    </div>
+                </div>
+                <div class="analysis-tool-controls">
+                    <div class="form-group">
+                        <label for="detailsSensitivities">۹. حساسیت‌های رسانه‌ای/قضایی</label>
+                        <textarea id="detailsSensitivities" placeholder="موضوعات حساس، خطوط قرمز، اطلاعات طبقه‌بندی شده و ..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsKeyMessages">۱۰. پیام‌های کلیدی مدنظر (اختیاری)</label>
+                        <textarea id="detailsKeyMessages" placeholder="سه پیام کلیدی که می‌خواهید برجسته شود..."></textarea>
+                    </div>
+                </div>
+                <div class="analysis-tool-controls">
+                    <div class="form-group">
+                        <label for="detailsChannels">۱۱. کانال‌های انتشار هدف (اختیاری)</label>
+                        <input id="detailsChannels" type="text" placeholder="مثلاً تلویزیون ملی، توئیتر/X، اینستاگرام، رادیو" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsTone">۱۲. لحن مطلوب</label>
+                        <select id="detailsTone" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; font-family:'Vazirmatn', sans-serif;">
+                            <option value="official">رسمی</option>
+                            <option value="firm">قاطع</option>
+                            <option value="empathetic">همدلانه</option>
+                            <option value="analytical">تحلیلی</option>
+                            <option value="hopeful">امیدبخش</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="detailsSummary" style="font-weight: 700; color: var(--primary-color);">۱۳. خلاصه سناریو/توضیحات تکمیلی بحران</label>
+                <textarea id="detailsSummary" placeholder="به‌صورت خلاصه سناریوی بحران را توضیح دهید تا در بیانیه لحاظ شود..."></textarea>
+
+                <button id="generateButton">تولید بیانیه هوشمند</button>
+                <div id="analysisResultWrapper">
+                    <h4>بیانیه تولیدشده توسط هوش مصنوعی:</h4>
+                    <div id="analysisResult"></div>
                 </div>
             </div>
         </section>
@@ -688,7 +745,7 @@
             // Event Listeners
             crisisSelector.addEventListener('click', handleCrisisSelection);
             roadmapAccordion.addEventListener('click', handleAccordionToggle);
-            document.getElementById('analyzeButton').addEventListener('click', handleAnalysisRequest);
+            document.getElementById('generateButton').addEventListener('click', handleGenerationRequest);
             document.querySelectorAll('.nav-link, .hero-nav .btn').forEach(anchor => {
                 anchor.addEventListener('click', handleSmoothScroll);
             });
@@ -730,33 +787,30 @@
             }
         }
 
-        function handleAnalysisRequest() {
+        function handleGenerationRequest() {
             const crisisKey = document.getElementById('analysisCrisisType').value;
-            const phaseIndex = document.getElementById('analysisPhase').value;
-            const statementText = document.getElementById('statementInput').value;
+            const phaseIndex = parseInt(document.getElementById('analysisPhase').value);
+            const details = gatherCrisisDetails();
             const resultWrapper = document.getElementById('analysisResultWrapper');
             const resultDiv = document.getElementById('analysisResult');
-            const suggestedWrapper = document.getElementById('suggestedStatementWrapper');
 
-            if (statementText.trim() === '') {
-                alert('لطفاً پیش‌نویس بیانیه را وارد کنید.');
+            if (!details.summary.trim() || !crisisKey) {
+                alert('لطفاً نوع بحران و خلاصه سناریو را تکمیل کنید.');
                 return;
             }
 
             resultWrapper.style.display = 'block';
-            suggestedWrapper.style.display = 'none';
             resultDiv.innerHTML = '<div class="spinner"></div>';
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            setTimeout(() => {
-                const { report, suggestion } = generateAnalysis(statementText, crisisKey, parseInt(phaseIndex));
-                resultDiv.innerHTML = report;
-                
-                const suggestedDiv = document.getElementById('suggestedStatement');
-                suggestedDiv.textContent = suggestion;
-                suggestedWrapper.style.display = 'block';
-
-            }, 2000); // 2-second delay for simulation
+            generateStatementFromDetails(details, crisisKey, phaseIndex)
+                .then(text => {
+                    resultDiv.textContent = text;
+                })
+                .catch(err => {
+                    console.error(err);
+                    resultDiv.innerHTML = '<p style="color:#e74c3c">خطا در تولید بیانیه. لطفاً بعداً دوباره تلاش کنید.</p>';
+                });
         }
 
         function handleSmoothScroll(e) {
@@ -796,89 +850,214 @@
             outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        /***** START OF MODIFIED SECTION *****/
-        function generateAnalysis(text, crisisKey, phaseIndex) {
-            // This is an advanced simulation of an AI model that now generates a new statement from scratch.
-            const crisisInfo = crisisData[crisisKey];
-            const phaseInfo = crisisInfo.phases[phaseIndex - 1];
-            
-            // --- Part 1: Analyze the user's original text (for reporting) ---
-            let score = 0;
-            let report = `<strong>تحلیل بیانیه اولیه شما برای: ${crisisInfo.title} - ${phaseInfo.title}</strong>\n\n`;
-            let improvements = [];
+        /***** START OF UPDATED GENERATION LOGIC *****/
+        const GEMINI_MODEL = 'gemini-2.5-flash-preview-05-20';
+        const GEMINI_API_KEY = '';
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+        const GEMINI_PROXY_URLS = [
+            '/.netlify/functions/gemini-proxy',
+            '/.netlify/functions/netlify/gemini-proxy',
+            '/.netlify/functions/netlify-gemini-proxy'
+        ];
 
-            // 1. Check against general principles
-            if (text.includes('متاسفیم') || text.includes('عذرخواهی') || text.includes('همدلی') || text.includes('تاسف')) { score++; report += '✅ (عمومی) رعایت اصل همدلی/مسئولیت‌پذیری.\n'; }
-            else { improvements.push('بیانیه فاقد لحن همدلانه یا عذرخواهی صریح است (اصل ۳ و ۱۰).'); }
-
-            if (text.includes('اقدام') || text.includes('دستور') || text.includes('تیم') || text.includes('بسیج')) { score++; report += '✅ (عمومی) رعایت اصل نمایش عمل (اصل ۴).\n'; }
-            else { improvements.push('اشاره مستقیمی به اقدامات عملی نشده است (اصل ۴).'); }
-            
-            // 2. Check against crisis-specific principles (Framing)
-            let specificPrincipleMet = false;
-            if (crisisKey === 'security' && (text.includes('کور') || text.includes('اقتدار') || text.includes('خصمانه'))) { specificPrincipleMet = true; }
-            if (crisisKey === 'technical-infra' && (text.includes('عذرخواهی'))) { specificPrincipleMet = true; }
-            if (crisisKey === 'economic' && (text.includes('هیجانی') || text.includes('روانی'))) { specificPrincipleMet = true; }
-            if (crisisKey === 'natural-disaster' && (text.includes('همدلی') || text.includes('فاجعه'))) { specificPrincipleMet = true; }
-            
-            if (specificPrincipleMet) { score+=2; report += '✅ (اختصاصی) قاب‌بندی بیانیه با اصول اختصاصی این بحران همخوانی دارد.\n'; }
-            else { improvements.push(`قاب‌بندی بیانیه (اصل ۶) با الگوی پیشنهادی برای این بحران مطابقت کامل ندارد.`); }
-
-            // 3. Check against phase-specific keywords/goals
-            let phaseGoalMet = false;
-            phaseInfo.keywords.forEach(kw => { if (text.includes(kw)) phaseGoalMet = true; });
-            if (phaseGoalMet) { score+=2; report += `✅ (فازی) محتوا با اهداف ${phaseInfo.title} تطابق دارد.\n`; }
-            else { improvements.push(`محتوای بیانیه با هدف اصلی فاز ${phaseIndex} (که باید شامل کلماتی کلیدی مانند «${phaseInfo.keywords.join('، ')}» باشد) فاصله دارد.`); }
-
-            // --- Part 2: Generate a new, ideal statement from scratch ---
-            let suggestion = '';
-            
-            // Helper to find context (like location or a number) from user's text
-            const findContext = (regex, fallback) => {
-                const match = text.match(regex);
-                return match ? match[0] : fallback;
+        function gatherCrisisDetails() {
+            return {
+                location: (document.getElementById('detailsLocation')?.value || '').trim(),
+                time: (document.getElementById('detailsTime')?.value || '').trim(),
+                severity: (document.getElementById('detailsSeverity')?.value || '').trim(),
+                casualties: (document.getElementById('detailsCasualties')?.value || '').trim(),
+                actions: (document.getElementById('detailsActions')?.value || '').trim(),
+                needs: (document.getElementById('detailsNeeds')?.value || '').trim(),
+                sensitivities: (document.getElementById('detailsSensitivities')?.value || '').trim(),
+                keyMessages: (document.getElementById('detailsKeyMessages')?.value || '').trim(),
+                channels: (document.getElementById('detailsChannels')?.value || '').trim(),
+                tone: (document.getElementById('detailsTone')?.value || 'official').trim(),
+                summary: (document.getElementById('detailsSummary')?.value || '').trim()
             };
-
-            // Rebuild the statement based on protocol
-            let location = findContext(/در\s+([^\s]+)/, '[محل حادثه]');
-            if (location.startsWith('در ')) location = location.substring(3);
-            let number = findContext(/\d+/, '');
-            
-            switch(crisisKey) {
-                case 'natural-disaster':
-                    if(phaseIndex === 1) suggestion = `با ابراز تاسف و همدلی عمیق با هم‌وطنان آسیب‌دیده در حادثه ${location}، به اطلاع می‌رساند به دستور رئیس جمهور، تمام امکانات کشور برای نجات جان عزیزانمان بسیج شده است. دولت بر اوضاع کنترل کامل دارد و گزارش اقدامات متعاقبا اعلام خواهد شد.`;
-                    else if (phaseIndex === 2) suggestion = `اولین تیم‌های ارزیاب و امدادی به منطقه ${location} رسیده‌اند. طبق گزارش‌های اولیه، ${number || 'تعدادی'} مصدوم شناسایی شده‌اند. از مردم تقاضا می‌شود از تجمع در محل حادثه خودداری کرده و اخبار را فقط از مراجع رسمی دنبال کنند.`;
-                    else suggestion = `تاکنون بیش از ${number || 'هزاران قلم'} اقلام امدادی شامل چادر و پتو در منطقه ${location} توزیع شده است. ضمن قدردانی از صبر مردم و تلاش‌های جهادی، برنامه دولت برای اسکان موقت و بازسازی مناطق آسیب‌دیده به زودی اعلام می‌شود.`;
-                    break;
-                case 'technical-infra':
-                    if(phaseIndex === 1) suggestion = `به دلیل بروز اختلال فنی در شبکه، شاهد قطعی ${location.includes('برق') ? 'برق' : 'انرژی'} در بخش‌هایی از کشور هستیم. ضمن عذرخواهی صریح از تمام شهروندان به دلیل مشکلات پیش‌آمده، به اطلاع می‌رساند تیم‌های فنی در حال رفع کامل مشکل هستند.`;
-                    else if (phaseIndex === 2) suggestion = `علت اصلی اختلال، ${number || 'فشار'} بر شبکه تشخیص داده شده است. جدول زمان‌بندی تقریبی رفع مشکل در مناطق مختلف از طریق رسانه‌ها اعلام خواهد شد. از صبر و شکیبایی شما سپاسگزاریم.`;
-                    else suggestion = `با تلاش بی‌وقفه تیم‌های عملیاتی، مشکل قطعی در اکثر مناطق رفع گردیده است. دولت برنامه نوسازی زیرساخت‌ها را برای جلوگیری از تکرار این حوادث در دستور کار فوری قرار داده و سازوکار جبران خسارت مشترکین در حال بررسی است.`;
-                    break;
-                case 'security':
-                    if(phaseIndex === 1) suggestion = `عصر امروز یک اقدام تروریستی کور در ${location} رخ داد. نیروهای امنیتی و مسلح با اقتدار کامل بر اوضاع مسلط هستند. برای حفظ موفقیت عملیات، از مردم درخواست می‌شود از انتشار اخبار غیرموثق خودداری کرده و به اطلاعیه‌های رسمی توجه کنند.`;
-                    else if (phaseIndex === 2) suggestion = `در ادامه عملیات ضدتروریستی در ${location}، ${number || 'چند تن'} از عوامل اصلی به هلاکت رسیدند. اوضاع کاملا تحت کنترل است. هرگونه شایعه در خصوص وسعت حادثه قویا تکذیب می‌شود.`;
-                    else suggestion = `با رشادت نیروهای امنیتی، عملیات دفع حمله تروریستی در ${location} با موفقیت کامل پایان یافت و تمام عوامل آن به هلاکت رسیده یا دستگیر شدند. هویت و وابستگی این گروهک تروریستی به زودی اعلام خواهد شد. ایران اسلامی انتقام خون شهدا را خواهد گرفت.`;
-                    break;
-                default:
-                    // Generic template for other crises
-                    suggestion = phaseInfo.points.join(' ');
-            }
-
-            // --- Part 3: Finalize the report ---
-            let finalScore = Math.round((score / 5) * 10);
-            report += '\n<hr>\n<strong>جمع‌بندی و امتیاز نهایی بیانیه اولیه شما:</strong>\n';
-            report += `⭐ <strong>امتیاز کلی: ${finalScore}/10</strong>\n\n`;
-
-            if (improvements.length > 0) {
-                report += '<strong>نقاط ضعف اصلی بیانیه شما:</strong>\n<ul>' + improvements.map(i => `<li>${i}</li>`).join('') + '</ul>';
-            } else {
-                report += '<strong>نقطه ضعف مشخصی یافت نشد.</strong> بیانیه شما ساختار قدرتمندی دارد.\n';
-            }
-
-            return { report, suggestion };
         }
-        /***** END OF MODIFIED SECTION *****/
+
+        function extractFoundationsPrinciples() {
+            const rows = document.querySelectorAll('#foundations .principles-table tbody tr');
+            const principles = [];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 3) {
+                    const principle = cells[0].innerText.replace(/\s+/g, ' ').trim();
+                    const execution = cells[1].innerText.replace(/\s+/g, ' ').trim();
+                    const goal = cells[2].innerText.replace(/\s+/g, ' ').trim();
+                    principles.push({ principle, execution, goal });
+                }
+            });
+            return principles;
+        }
+
+        function stripHtml(html) {
+            return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        function buildPrompt(details, crisisKey, phaseIndex) {
+            const foundations = extractFoundationsPrinciples();
+            const crisis = crisisData[crisisKey];
+            const phase = crisis?.phases?.[phaseIndex - 1];
+            const roadmap = (crisis?.roadmap || []).map(r => ({
+                title: r.title,
+                action: stripHtml(r.action),
+                content: stripHtml(r.content),
+                goal: stripHtml(r.goal)
+            }));
+
+            const foundationsText = foundations.map((p, i) => `${i+1}. ${p.principle} | اجرا: ${p.execution} | هدف: ${p.goal}`).join('\n');
+            const crisisPrinciples = (crisis?.principles || []).map((p, i) => `${i+1}. ${p}`).join('\n');
+            const phaseChecklist = (phase?.points || []).map((p, i) => `- ${p}`).join('\n');
+            const phaseKeywords = (phase?.keywords || []).join('، ');
+            const roadmapHints = roadmap.map(r => `• ${r.title}\n  اقدام: ${r.action}\n  محتوا: ${r.content}\n  هدف: ${r.goal}`).join('\n');
+
+            const systemPrompt = `
+شما سخنگوی ارشد و استراتژیست ارتباطات بحران دولت هستید. خروجی شما باید یک «بیانیه رسمی» کامل، دقیق و تاثیرگذار به زبان فارسی باشد.
+
+قواعد تولید:
+1) لحن و سبک را با نوع بحران و فاز زمانی منطبق کنید.
+2) اصول کلان (بخش ۱) و اصول اختصاصی بحران انتخاب‌شده (بخش ۲) را کاملاً رعایت کنید.
+3) چک‌لیست فاز جاری و سرنخ‌های نقشه راه سخنگو (بخش ۳) باید در متن منعکس شود.
+4) خلاقیت و نوآوری مجاز است، اما چارچوب حرفه‌ای و حقوقی حفظ شود.
+5) از اعداد/واقعیات ارائه‌شده استفاده کنید و در صورت نبود عدد، مبهم‌گویی نکنید.
+6) خروجی فقط متن بیانیه باشد؛ بدون مقدمه تحلیلی یا توضیحات جانبی.
+7) ساختار پیشنهادی: 2 تا 4 بند کوتاه، موجز و روشن؛ با جمع‌بندی و پیام اقدام (Call to Action) در انتها.
+            `.trim();
+
+            const userQuery = `
+【نوع بحران】 ${crisis?.title || crisisKey}
+【فاز زمانی】 ${phase?.title || ''} (${phase?.time || ''})
+
+【جزئیات بحران】
+- مکان: ${details.location || '—'}
+- زمان وقوع: ${details.time || '—'}
+- شدت/دامنه: ${details.severity || '—'}
+- تلفات/مجروحان: ${details.casualties || '—'}
+- اقدامات انجام‌شده: ${details.actions || '—'}
+- نیازهای فوری: ${details.needs || '—'}
+- حساسیت‌ها: ${details.sensitivities || '—'}
+- پیام‌های مدنظر: ${details.keyMessages || '—'}
+- کانال‌های هدف: ${details.channels || '—'}
+- لحن مطلوب: ${details.tone || 'official'}
+- خلاصه سناریو: ${details.summary}
+
+【اصول کلان (بخش ۱)】
+${foundationsText}
+
+【اصول اختصاصی این بحران (بخش ۲)】
+${crisisPrinciples}
+
+【چک‌لیست فاز جاری (بخش ۲)】
+${phaseChecklist}
+کلیدواژه‌های فاز: ${phaseKeywords}
+
+【نقشه راه سخنگو (بخش ۳) - سرنخ‌ها】
+${roadmapHints}
+
+بر این اساس، یک «بیانیه رسمی» آماده قرائت بنویس. از لحن ${details.tone || 'رسمی'} استفاده کن و اصول فوق را رعایت کن. خروجی فقط متن بیانیه باشد.
+            `.trim();
+
+            return { systemPrompt, userQuery };
+        }
+
+        function buildGeminiPayload(systemPrompt, userQuery) {
+            return {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+        }
+
+        async function callGeminiViaProxy(payload) {
+            let lastErr;
+            for (const url of GEMINI_PROXY_URLS) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) {
+                        const t = await res.text();
+                        throw new Error(`Proxy HTTP ${res.status}: ${t}`);
+                    }
+                    const data = await res.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                    if (!text) throw new Error('Empty response from model (proxy)');
+                    return text;
+                } catch (e) {
+                    lastErr = e;
+                }
+            }
+            throw lastErr || new Error('All proxy endpoints failed');
+        }
+
+        async function callGeminiDirect(payload) {
+            if (!GEMINI_API_KEY) {
+                throw new Error('API key is missing. Please set GEMINI_API_KEY inside the file.');
+            }
+            const maxRetries = 3;
+            let attempt = 0;
+            while (attempt < maxRetries) {
+                try {
+                    const res = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) {
+                        const t = await res.text();
+                        throw new Error(`HTTP ${res.status}: ${t}`);
+                    }
+                    const data = await res.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                    if (!text) throw new Error('Empty response from model');
+                    return text;
+                } catch (e) {
+                    attempt++;
+                    if (attempt >= maxRetries) throw e;
+                    await new Promise(r => setTimeout(r, Math.pow(2, attempt) * 1000));
+                }
+            }
+        }
+
+        function generateStatementLocally(details, crisisKey, phaseIndex) {
+            const crisis = crisisData[crisisKey];
+            const phase = crisis?.phases?.[phaseIndex - 1];
+            const location = details.location || '[محل]';
+            const casualties = details.casualties || '';
+            const tone = details.tone || 'رسمی';
+            let body = '';
+            if (crisisKey === 'natural-disaster' && phaseIndex === 1) {
+                body = `با ابراز تاسف و همدلی با آسیبدیدگان حادثه ${location}، اعلام می‌شود تمامی امکانات برای نجات و امدادرسانی بسیج شده است. دولت بر اوضاع کنترل دارد و گزارش اقدامات به‌طور مستمر اطلاعرسانی می‌شود.`;
+            } else if (phase?.points?.length) {
+                body = phase.points.join(' ');
+            } else {
+                body = 'بیانیه رسمی با محور اقدام، همدلی و شفافیت صادر میشود.';
+            }
+            const needs = details.needs ? ` همچنین، نیازهای فوری: ${details.needs}.` : '';
+            const actions = details.actions ? ` تاکنون ${details.actions}.` : '';
+            const casualtiesLine = casualties ? ` برآورد اولیه تلفات/مجروحان: ${casualties}.` : '';
+            return `${body}${actions}${casualtiesLine}${needs}`;
+        }
+
+        async function generateStatementFromDetails(details, crisisKey, phaseIndex) {
+            const { systemPrompt, userQuery } = buildPrompt(details, crisisKey, phaseIndex);
+            const payload = buildGeminiPayload(systemPrompt, userQuery);
+            try {
+                // Prefer server proxy when available
+                return await callGeminiViaProxy(payload);
+            } catch (proxyErr) {
+                try {
+                    // Fallback to direct (requires GEMINI_API_KEY)
+                    return await callGeminiDirect(payload);
+                } catch (directErr) {
+                    // Offline fallback
+                    return generateStatementLocally(details, crisisKey, phaseIndex);
+                }
+            }
+        }
+        /***** END OF UPDATED GENERATION LOGIC *****/
 
     </script>
 </body>
