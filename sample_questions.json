@@ -1,0 +1,1514 @@
+{
+  "parts": [
+    {
+      "name": "Part A",
+      "questions": [
+        {
+          "prompt": "Question 1",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 2",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 3",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 4",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 5",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 6",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 7",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 8",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 9",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 10",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 11",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 12",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 13",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 14",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 15",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 16",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 17",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 18",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 19",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 20",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 21",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 22",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 23",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 24",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 25",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 26",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 27",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 28",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 29",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 30",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 31",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 32",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 33",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 34",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 35",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 36",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 37",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 38",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 39",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 40",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 41",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 42",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 43",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 44",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 45",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 46",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 47",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 48",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 49",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 50",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Part B",
+      "questions": [
+        {
+          "prompt": "Question 1",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 2",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 3",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 4",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 5",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 6",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 7",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 8",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 9",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 10",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 11",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 12",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 13",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 14",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 15",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 16",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 17",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 18",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 19",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 20",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 21",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 22",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 23",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 24",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 25",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 26",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 27",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 28",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 29",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 30",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 31",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 32",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 33",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 34",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 35",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 36",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 37",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 38",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 39",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 40",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 41",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 42",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 43",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 44",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 45",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 46",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 47",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 48",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 49",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "prompt": "Question 50",
+          "statements": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": [
+            true,
+            false,
+            true,
+            false
+          ]
+        }
+      ]
+    }
+  ]
+}

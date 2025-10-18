@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exam Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div class="max-w-6xl mx-auto p-4">
+    <h1 class="text-xl font-bold mb-3">Exam Results</h1>
+
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <label class="block text-sm font-medium">Exam ID</label>
+      <div class="flex items-center gap-3">
+        <input id="examId" class="w-full border rounded px-3 py-2" />
+        <button id="load" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Load</button>
+        <button id="exportCsv" class="px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700">Export CSV</button>
+      </div>
+    </div>
+
+    <div id="summary" class="bg-white p-4 rounded shadow mb-4 text-sm"></div>
+
+    <div class="bg-white p-4 rounded shadow mb-4 overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b">
+            <th class="text-left p-2">#</th>
+            <th class="text-left p-2">Student ID</th>
+            <th class="text-left p-2">Name</th>
+            <th class="text-left p-2">Total</th>
+            <th class="text-left p-2">Part A</th>
+            <th class="text-left p-2">Part B</th>
+            <th class="text-left p-2">Submitted At</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-semibold mb-2">Score Distribution</h3>
+        <canvas id="dist"></canvas>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-semibold mb-2">Per-Question Average Score</h3>
+        <canvas id="perq"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const qs = new URLSearchParams(location.search);
+    const examIdInput = document.getElementById('examId');
+    if (qs.get('examId')) examIdInput.value = qs.get('examId');
+
+    let resultsData = null;
+
+    const loadResults = async () => {
+      const id = examIdInput.value.trim();
+      const res = await fetch(`/api/exams/${encodeURIComponent(id)}/results`);
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Failed'); return; }
+      resultsData = data;
+      render();
+    };
+
+    const render = () => {
+      const s = resultsData.stats;
+      document.getElementById('summary').innerHTML = `
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div><div class="text-slate-500">Participants</div><div class="font-bold">${s.totalParticipants}</div></div>
+          <div><div class="text-slate-500">Average</div><div class="font-bold">${s.averageTotal.toFixed(2)}</div></div>
+          <div><div class="text-slate-500">Part A Avg</div><div class="font-bold">${s.partAverages[0].toFixed(2)}</div></div>
+          <div><div class="text-slate-500">Part B Avg</div><div class="font-bold">${s.partAverages[1].toFixed(2)}</div></div>
+        </div>
+      `;
+
+      const tbody = document.getElementById('rows');
+      tbody.innerHTML = '';
+      resultsData.rankings.forEach((r, i) => {
+        const tr = document.createElement('tr');
+        tr.className = 'border-b';
+        tr.innerHTML = `
+          <td class="p-2">${i+1}</td>
+          <td class="p-2">${r.studentId}</td>
+          <td class="p-2">${r.name || ''}</td>
+          <td class="p-2 font-semibold">${r.total.toFixed(2)}</td>
+          <td class="p-2">${r.parts[0].toFixed(2)}</td>
+          <td class="p-2">${r.parts[1].toFixed(2)}</td>
+          <td class="p-2 text-xs">${new Date(r.submittedAt).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Score distribution
+      const dist = resultsData.stats.scoreDistribution; // array of { bin,label,count }
+      new Chart(document.getElementById('dist'), {
+        type: 'bar',
+        data: { labels: dist.map(d => d.label), datasets: [{ label: 'Count', data: dist.map(d => d.count), backgroundColor: '#6366f1' }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+      });
+
+      // Per-question average (concatenate parts A then B)
+      const perQ = resultsData.stats.perQuestionAvg; // array of numbers
+      new Chart(document.getElementById('perq'), {
+        type: 'line',
+        data: { labels: perQ.map((_,i)=>`Q${i+1}`), datasets: [{ label: 'Avg Score', data: perQ, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.2)' }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1 } } }
+      });
+    };
+
+    document.getElementById('load').addEventListener('click', loadResults);
+
+    document.getElementById('exportCsv').addEventListener('click', () => {
+      if (!resultsData) return;
+      const header = ['Rank','Student ID','Name','Total','PartA','PartB','SubmittedAt'];
+      const rows = resultsData.rankings.map((r,i)=>[i+1, r.studentId, r.name||'', r.total, r.parts[0], r.parts[1], new Date(r.submittedAt).toISOString()]);
+      const csv = [header, ...rows].map(r=>r.join(',')).join('\n');
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = `${examIdInput.value}_results.csv`; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    if (examIdInput.value) loadResults();
+  </script>
+</body>
+</html>

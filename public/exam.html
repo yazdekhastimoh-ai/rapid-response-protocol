@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Online Exam</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div class="max-w-5xl mx-auto p-4">
+    <h1 class="text-xl font-bold mb-3">Online Exam</h1>
+
+    <div id="setup" class="bg-white p-4 rounded shadow mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div>
+          <label class="block text-sm font-medium">Exam ID</label>
+          <input id="examId" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Student ID</label>
+          <input id="studentId" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Student Name</label>
+          <input id="studentName" class="w-full border rounded px-3 py-2" />
+        </div>
+      </div>
+      <button id="loadExam" class="mt-3 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Load Exam</button>
+      <p id="msg" class="mt-2 text-sm"></p>
+    </div>
+
+    <div id="waiting" class="hidden bg-amber-50 border border-amber-200 rounded p-4 mb-4">
+      <p class="font-semibold">Exam not started yet.</p>
+      <p id="countdownStart" class="text-amber-700"></p>
+    </div>
+
+    <div id="exam" class="hidden">
+      <div class="flex items-center justify-between bg-white p-3 rounded shadow mb-3">
+        <div>
+          <div id="examTitle" class="font-semibold"></div>
+          <div id="timeWindow" class="text-xs text-slate-500"></div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm">Time remaining</div>
+          <div id="timeRemaining" class="font-bold text-lg"></div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <button id="tabA" class="px-4 py-2 rounded bg-slate-200 mr-2">Part A</button>
+        <button id="tabB" class="px-4 py-2 rounded bg-slate-200">Part B</button>
+      </div>
+
+      <div id="partA" class="bg-white p-4 rounded shadow mb-4"></div>
+      <div id="partB" class="bg-white p-4 rounded shadow mb-4 hidden"></div>
+
+      <div class="flex items-center gap-3">
+        <button id="submitBtn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Submit</button>
+        <span id="saveInfo" class="text-sm text-slate-500"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const qs = new URLSearchParams(location.search);
+    const examIdInput = document.getElementById('examId');
+    if (qs.get('examId')) examIdInput.value = qs.get('examId');
+
+    let examData = null;
+    let student = { id: '', name: '' };
+    let answers = [[], []]; // parts -> questions -> [bool,bool,bool,bool]
+
+    const k = () => `exam_${examIdInput.value}__${student.id}`;
+
+    const renderQuestion = (partIndex, qIndex, question) => {
+      const container = document.createElement('div');
+      container.className = 'border rounded p-3 mb-3';
+      const title = document.createElement('div');
+      title.className = 'font-semibold mb-2';
+      title.textContent = `${qIndex + 1}. ${question.prompt || ''}`;
+      container.appendChild(title);
+      (question.statements || []).forEach((stmt, sIndex) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between border-t py-2';
+        const sText = document.createElement('div');
+        sText.textContent = `${String.fromCharCode(65 + sIndex)}) ${stmt}`;
+        const controls = document.createElement('div');
+
+        const makeOption = (label, val) => {
+          const id = `p${partIndex}q${qIndex}s${sIndex}_${label}`;
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = `p${partIndex}q${qIndex}s${sIndex}`;
+          input.id = id;
+          input.checked = answers?.[partIndex]?.[qIndex]?.[sIndex] === val;
+          input.addEventListener('change', () => {
+            if (!answers[partIndex][qIndex]) answers[partIndex][qIndex] = [null, null, null, null];
+            answers[partIndex][qIndex][sIndex] = val;
+            localStorage.setItem(k(), JSON.stringify({ student, answers }));
+            document.getElementById('saveInfo').textContent = 'Saved';
+          });
+          const lbl = document.createElement('label');
+          lbl.htmlFor = id;
+          lbl.className = 'ml-2';
+          lbl.textContent = label;
+          const wrap = document.createElement('label');
+          wrap.className = 'inline-flex items-center ml-4';
+          wrap.appendChild(input);
+          wrap.appendChild(lbl);
+          return wrap;
+        };
+
+        controls.appendChild(makeOption('True', true));
+        controls.appendChild(makeOption('False', false));
+        row.appendChild(sText);
+        row.appendChild(controls);
+        container.appendChild(row);
+      });
+      return container;
+    };
+
+    const renderPart = (index, elId) => {
+      const root = document.getElementById(elId);
+      root.innerHTML = '';
+      const part = examData.parts[index] || { questions: [] };
+      part.questions.forEach((q, qi) => root.appendChild(renderQuestion(index, qi, q)));
+    };
+
+    const showPart = (index) => {
+      document.getElementById('partA').classList.toggle('hidden', index !== 0);
+      document.getElementById('partB').classList.toggle('hidden', index !== 1);
+      document.getElementById('tabA').className = index === 0 ? 'px-4 py-2 rounded bg-indigo-600 text-white mr-2' : 'px-4 py-2 rounded bg-slate-200 mr-2';
+      document.getElementById('tabB').className = index === 1 ? 'px-4 py-2 rounded bg-indigo-600 text-white' : 'px-4 py-2 rounded bg-slate-200';
+    };
+
+    let endTs = 0;
+    let countdownTimer = null;
+
+    const formatHMS = (sec) => {
+      const s = Math.max(0, Math.floor(sec));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const r = s % 60;
+      return [h,m,r].map(n => String(n).padStart(2, '0')).join(':');
+    };
+
+    const startCountdown = (serverNow, secondsRemaining) => {
+      const now = Date.now();
+      const skew = serverNow - now;
+      endTs = now + skew + secondsRemaining * 1000;
+      if (countdownTimer) clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        const left = Math.max(0, Math.floor((endTs - Date.now()) / 1000));
+        document.getElementById('timeRemaining').textContent = formatHMS(left);
+        if (left <= 0) { clearInterval(countdownTimer); autoSubmit(); }
+      }, 250);
+    };
+
+    const loadSaved = () => {
+      const saved = localStorage.getItem(k());
+      if (saved) {
+        const obj = JSON.parse(saved);
+        if (obj && obj.answers) answers = obj.answers;
+      }
+    };
+
+    const saveLoop = () => {
+      setInterval(() => {
+        if (!student.id) return;
+        localStorage.setItem(k(), JSON.stringify({ student, answers }));
+        document.getElementById('saveInfo').textContent = 'Autosaved';
+      }, 5000);
+    };
+
+    const submit = async () => {
+      const body = { student, parts: answers };
+      const res = await fetch(`/api/exams/${encodeURIComponent(examIdInput.value)}/submissions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Submitted successfully');
+        document.querySelectorAll('input[type=radio]').forEach(i => i.disabled = true);
+        document.getElementById('submitBtn').disabled = true;
+      } else {
+        alert(data.error || 'Submit failed');
+      }
+    };
+
+    const autoSubmit = () => {
+      document.getElementById('submitBtn').disabled = true;
+      submit();
+    };
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      if (confirm('Submit your answers?')) submit();
+    });
+
+    document.getElementById('tabA').addEventListener('click', () => showPart(0));
+    document.getElementById('tabB').addEventListener('click', () => showPart(1));
+
+    document.getElementById('loadExam').addEventListener('click', async () => {
+      const id = examIdInput.value.trim();
+      student = { id: document.getElementById('studentId').value.trim(), name: document.getElementById('studentName').value.trim() };
+      if (!id || !student.id) { document.getElementById('msg').textContent = 'Enter Exam ID and Student ID'; return; }
+
+      loadSaved();
+
+      const res = await fetch(`/api/exams/${encodeURIComponent(id)}/for-student`);
+      const data = await res.json();
+      if (!res.ok) { document.getElementById('msg').textContent = data.error || 'Failed to load'; return; }
+
+      const { exam, window } = data;
+      examData = exam;
+
+      document.getElementById('examTitle').textContent = exam.title;
+      document.getElementById('timeWindow').textContent = `Start: ${new Date(window.start).toLocaleString()} | End: ${new Date(window.end).toLocaleString()}`;
+
+      if (!window.open) {
+        document.getElementById('waiting').classList.remove('hidden');
+        document.getElementById('exam').classList.add('hidden');
+        const updateCountdown = () => {
+          const now = Date.now();
+          const until = Math.max(0, Math.floor((new Date(window.start).getTime() - now) / 1000));
+          document.getElementById('countdownStart').textContent = `Starts in ${formatHMS(until)}`;
+          if (until <= 0) location.reload();
+        };
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        return;
+      }
+
+      document.getElementById('waiting').classList.add('hidden');
+      document.getElementById('exam').classList.remove('hidden');
+
+      if (!answers || !answers.length) answers = [[], []];
+      if (!answers[0]) answers[0] = [];
+      if (!answers[1]) answers[1] = [];
+
+      renderPart(0, 'partA');
+      renderPart(1, 'partB');
+      showPart(0);
+
+      startCountdown(window.serverNow, window.secondsRemaining);
+      saveLoop();
+    });
+  </script>
+</body>
+</html>
